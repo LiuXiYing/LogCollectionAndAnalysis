@@ -173,8 +173,8 @@ df -h /
 | 虚拟 CPU 核心数 | 2 |
 | 虚拟内存 | 5.7Gi |
 | 虚磁盘容量 | 40G |
-| 根分区可用空间 | |
-| 资源分配是否符合对应档位 | 26G |
+| 根分区可用空间 | 26G |
+| 资源分配是否符合对应档位 | 是 |
 
 ![虚机资源](imgs/lab1-resources.png)
 
@@ -251,13 +251,13 @@ sudo tail -n 10 /var/log/syslog
 | 项目 | 你的填写内容 |
 | :--- | :--- |
 | VMware Tools 版本 | 	13.0.10.0 (build-25056151) |
-| `open-vm-tools` 是否 active | 是（active）|
+| `open-vm-tools` 是否 active | active |
 | 桌面分辨率是否能自动调整 | 是 |
 | SSH 是否 enabled / active | enabled / active |
 | 22 端口是否监听 | 是 |
 | rsyslog 是否 enabled / active | enabled / active|
 | `/var/log/syslog` 是否出现带学号姓名的测试日志 | 是 |
-| 三项组件是否全部验收合格 | |
+| 三项组件是否全部验收合格 | 是 |
 
 ![基础组件状态](imgs/lab1-services.png)
 
