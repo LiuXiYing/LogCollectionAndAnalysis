@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: pr-info-${{ github.event.pull_request.number }}
@@ -25,6 +26,34 @@ jobs:
           script: |
             const fs = require("fs");
             const pr = context.payload.pull_request;
+            const action = context.payload.action;
+
+            // 超时判定以"当前 head 提交被推送到 PR 的时间"为准，而不是 PR 创建时间，
+            // 否则学生可以在截止前开一个占位 PR，截止后再慢慢补交。
+            // 时间全部取 GitHub 服务器端记录，不使用 git 提交里可由本地随意修改的日期。
+            let eventAt;
+            if (action === "opened" || action === "synchronize") {
+              // 这两种事件由推送代码触发，updated_at 就是本次推送的服务器时间。
+              eventAt = pr.updated_at;
+            } else {
+              // reopened / edited 不改变内容，取同一 head_sha 最早一次触发本工作流的时间，
+              // 避免"截止后推送 → 关闭 → 重开或改标题"绕过超时判定。
+              const runs = await github.paginate(github.rest.actions.listWorkflowRuns, {
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: "pr-check.yml",
+                event: "pull_request_target",
+                head_sha: pr.head.sha,
+                per_page: 100,
+              });
+              const times = runs
+                .filter((run) => run.id !== context.runId)
+                .map((run) => run.run_started_at || run.created_at)
+                .filter(Boolean)
+                .sort();
+              eventAt = times.length > 0 ? times[0] : pr.updated_at;
+            }
+
             fs.mkdirSync("pr-info", { recursive: true });
             fs.writeFileSync(
               "pr-info/event.json",
@@ -33,9 +62,10 @@ jobs:
                 number: pr.number,
                 title: pr.title,
                 head_sha: pr.head.sha,
-                event_at: pr.created_at
+                event_at: eventAt
               })
             );
+            core.info(`action=${action} head_sha=${pr.head.sha} event_at=${eventAt}`);
 
       - name: 上传可信 PR 元数据
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
