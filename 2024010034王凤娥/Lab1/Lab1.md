@@ -253,7 +253,7 @@ sudo tail -n 10 /var/log/syslog
 | `open-vm-tools` 是否 active |是|
 | 桌面分辨率是否能自动调整 |是|
 | SSH 是否 enabled / active |是|
-| 22 端口是否监听 |否|
+| 22 端口是否监听 |是|
 | rsyslog 是否 enabled / active |是|
 | `/var/log/syslog` 是否出现带学号姓名的测试日志 |是|
 | 三项组件是否全部验收合格 | 全部验收合格|
