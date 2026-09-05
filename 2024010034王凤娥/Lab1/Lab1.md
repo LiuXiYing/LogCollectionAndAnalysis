@@ -275,7 +275,7 @@ sudo tail -n 10 /var/log/syslog
 
 简要说明你遇到的问题、解决方法，以及当前环境是否可以继续完成后续实验：
 
-> 填写：遇到的问题：openssh-server安装后ssh服务无法正常运行，无22端口监听。解决方法：重装openssh-server，启动ssh并设置开机自启；安装open-vm-tools-desktop，切换Xorg会话，实现主机虚拟机剪贴板互通。当前虚拟机全部验收项合格，环境正常，可以继续后续实验。
+> 填写： 遇到的问题：安装openssh-server后ssh服务无法正常启动，无法设置开机自启，22端口没有监听。解决方法：重装openssh-server，启动ssh服务并配置开机自启；安装open-vm-tools-desktop，实现主机和虚拟机剪贴板互通、窗口自适应。当前虚拟机各项验收合格，环境正常，可以继续完成后续实验。
 
 ---
 
