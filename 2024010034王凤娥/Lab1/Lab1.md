@@ -167,7 +167,7 @@ df -h /
 
 | 项目 | 你的填写内容 |
 | :--- | :--- |
-| 宿主机内存 / CPU 核心 / 存放盘剩余空间 |CPU 14 核，内存 15.3GB，C 盘剩余 300GB|
+| 宿主机内存 / CPU 核心 / 存放盘剩余空间 |CPU 14 核，内存 15.3GB，C 盘剩余 337GB|
 | 选择的配置档位 | 课程推荐档|
 | 虚拟 CPU 核心数 | 2|
 | 虚拟内存 | 5.7GB|
@@ -232,7 +232,7 @@ ss -lnt | grep ':22 '
 ### 第七步：验证 rsyslog 能够写入日志
 
 ```bash
-logger -t lab1-check "Lab1 rsyslog test 学号姓名"
+logger -t lab1-check "Lab1 rsyslog test 学号王凤娥"
 ```
 
 ```bash
@@ -270,7 +270,7 @@ sudo tail -n 10 /var/log/syslog
 | Linux 版本 | Ubuntu 24.04 LTS Desktop amd64，安装介质为教师提供的 24.04.4 | Ubuntu 24.04.4，符合要求|
 | 虚拟机联网 | 具有 IP 和默认路由，IP 联通与 DNS 解析正常 | Ubuntu 24.04.4，符合要求|
 | 国内软件源 | 已换成国内镜像站，`sudo apt update` 成功 | 已更换国内源，apt‑update 执行成功|
-| CPU、内存、存储 | 至少 2 核、4GB、40GB，且与宿主机档位匹配 |配置 2 核 CPU、4GB 内存、40GB 磁盘，配置达标 |
+| CPU、内存、存储 | 至少 2 核、4GB、40GB，且与宿主机档位匹配 |配置达标 |
 | VMware Tools、SSH、rsyslog | 软件包已安装，服务和功能检查通过 | open‑vm‑tools、openssh‑server、rsyslog 全部安装，服务自启、端口监听、日志测试均通过|
 
 简要说明你遇到的问题、解决方法，以及当前环境是否可以继续完成后续实验：
