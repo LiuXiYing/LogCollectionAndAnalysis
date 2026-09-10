@@ -1,0 +1,78 @@
+version: 1
+
+course:
+  name: 日志收集与分析
+  timezone: Asia/Shanghai
+  title_template: "[{student_id}{student_name}]{assignment_id}作业提交"
+  submission_path_template: "{student_id}{student_name}/{assignment_id}"
+  merge_method: merge
+
+features:
+  auto_merge: true
+  comment_review: true
+  close_late_pr: true
+  ai_review: true
+  ocr_review: true
+  vision_review: true
+  metrics: true
+
+defaults:
+  min_nonempty_lines: 10
+  allow_extra_files: false
+  late_close_after_days: 7
+
+ai:
+  model: glm-4.7-flash
+  min_confidence: 0.8
+  timeout_seconds: 60
+  max_attempts: 3
+  max_file_bytes: 200000
+  max_total_bytes: 500000
+  max_output_tokens: 2048
+
+ocr:
+  detection_model: PP-OCRv6_small_det
+  recognition_model: PP-OCRv6_small_rec
+  min_line_confidence: 0.65
+  max_text_chars: 20000
+
+vision:
+  model: glm-4.6v-flash
+  min_confidence: 0.85
+  fail_confidence: 0.9
+  timeout_seconds: 90
+  max_attempts: 3
+  max_images: 6
+  max_image_bytes: 5000000
+  max_total_bytes: 12000000
+  max_pixels: 25000000
+  max_side: 4096
+  max_output_tokens: 2048
+
+# 发布作业时在这里追加 Lab1、Lab2 等配置。
+# required_files 为精确文件名，不支持通配符；vision_files 支持 fnmatch 通配符。
+assignments:
+  Lab1:
+    deadline: "2026-09-03T23:59:59+08:00"
+    required_files:
+      - Lab1.md
+      - imgs/lab1-vmware-version.png
+      - imgs/lab1-ubuntu-version.png
+      - imgs/lab1-network.png
+      - imgs/lab1-resources.png
+      - imgs/lab1-services.png
+    vision_files:
+      - imgs/lab1-vmware-version.png
+      - imgs/lab1-ubuntu-version.png
+      - imgs/lab1-network.png
+      - imgs/lab1-resources.png
+      - imgs/lab1-services.png
+    review_points:
+      - 作业信息表格中的学号、姓名、班级和完成日期必须填写完整，不能留空或保留模板占位符。
+      - 任务一：VMware 版本应为 VMware Workstation Pro 26H1 for Windows。
+      - 任务二：Ubuntu 应为 24.04 LTS Desktop，处理器架构为 x86_64，安装介质版本为 Ubuntu 24.04.4 LTS。当前小版本高于 24.04.4 属于正常的系统更新结果，不算错误。
+      - 任务三：虚拟机应有以 192.168、172 或 10 开头的私有 IP 和包含 default via 的默认路由；ping IP 和 ping 域名均成功；sudo apt update 使用国内镜像源（如 mirrors.tuna.tsinghua.edu.cn、mirrors.aliyun.com、mirrors.ustc.edu.cn）且没有 Err 或 Failed。若网络禁止 ping 但 apt update 成功，并在表格中说明情况，可判为合格。
+      - 任务四：虚拟 CPU 至少 2 核、内存至少 4GB、虚磁盘至少 40GB，且与所选配置档位一致。内存和根分区显示值略小于设置值属于正常现象，不算错误。
+      - 任务五：open-vm-tools 为 active；ssh 和 rsyslog 均为 enabled 且 active；系统正在监听 TCP 22 端口；/var/log/syslog 中存在带本人学号姓名的 lab1-check 测试日志。
+      - 环境验收总结表的每一行都要给出结论，并简要说明遇到的问题和解决方法。
+      - 截图必须是学生本人环境的电脑截图，终端截图需同时显示命令和输出，文字清晰可读。出现手机拍摄屏幕的反光、摩尔纹或明显倾斜时判为不合格。
