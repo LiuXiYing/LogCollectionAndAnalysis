@@ -154,7 +154,7 @@ timedatectl
 
 查看本地时间、时区和时间同步状态。日期与时间应正确，时区应为 `Asia/Shanghai`；时间错误会影响后面的日志筛选。
 
-> 记录：Ubuntu 的日期和时间为 ___四 2026-09-10 08:59:25 CST___；时区为 ___Asia/Shanghai (CST, +0800)___；时间同步状态为 ___yes___。
+> 记录：Ubuntu 的日期和时间为 ___四 2025-09-10 08:59:25 CST___；时区为 ___Asia/Shanghai (CST, +0800)___；时间同步状态为 ___yes___。
 
 **检查 syslog 文件**
 
@@ -228,7 +228,8 @@ hostname -I
 
 这里的 `-I` 是大写字母 `I`，不是小写 `i`，也不是数字 `1`。输出可能包含多个地址，应选择与 VMware NAT 网段对应的私有 IPv4 地址，例如 `192.168.80.128`，不要填写 `127.0.0.1`。把这个地址记下来，后面填写在 SSH 命令的 `@` 右边。
 
-> 记录：本次 SSH 连接使用的 Ubuntu 虚拟机 IP 为 ___192.168.161.128___。
+> 记录：本次 SSH 连接使用的 Ubuntu 虚拟机 IP 为
+__192.168.161.128__。
 
 **第 3 条：确认 SSH 服务正在运行**
 
@@ -238,7 +239,8 @@ systemctl is-active ssh
 
 期望输出 `active`，表示 SSH 服务当前正在运行。若输出其他状态，先按 Lab1 操作手册修复 SSH 服务。
 
-> 记录：SSH 服务的实际运行状态为 ___active___。
+> 记录：SSH 服务的实际运行状态为 __active__。
+
 
 **第 4 条：确认 22 端口正在监听**
 
@@ -294,7 +296,7 @@ whoami
 
 输出应是 Ubuntu 用户名。
 
-> 记录：SSH 登录后的用户名为 ___yanglii___。
+> 记录：SSH 登录后的用户名为 ___yangli___。
 
 再查看主机名：
 
@@ -304,7 +306,7 @@ hostname
 
 输出应是 Ubuntu 主机名。
 
-> 记录：SSH 登录后的主机名为 ___yangli-VMware-Virtual-Platform___。
+> 记录：SSH 登录后的主机名为 __yangli-VMware-Virtual-Platform___。
 
 最后查看当前目录：
 
@@ -314,7 +316,7 @@ pwd
 
 输出通常是该用户在 Ubuntu 中的主目录，例如 `/home/student`。
 
-> 记录：当前目录为 ___/home/yangli___；是否确认已通过 Git Bash 登录 Ubuntu？___是___。
+> 记录：当前目录为 ___/home/yangli/桌面___；是否确认已通过 Git Bash 登录 Ubuntu？___是___。
 
 **退出前保存 `imgs/lab2_ssh_login.png`**，保留 SSH 连接命令及这三条验证命令的输出，图片在下方显示。保存后可以继续使用这个 SSH 会话完成 3.4、3.5 节。
 
@@ -362,11 +364,11 @@ sudo ls -ld /var/log/journal /run/log/journal
 
 | 实际路径 | 主要用途 | 文本、二进制还是目录 | 使用什么命令读取 |
 | :--- | :--- | :--- | :--- |
-|/var/log/syslog|系统综合运行日志|文本|cat/less/tail|
-|/var/log/auth.log|登录、sudo、认证安全日志|文本|cat/less/tail|
-|/var/log/wtmp|成功登录历史|二进制|last|
-|/var/log/btmp|登录失败记录|二进制|sudo lastb|
-|/var/log/lastlog|各用户最后登录信息|二进制|lastlog|
+  /var/log/syslog | 系统综合运行日志 | 文本 | cat/less/tail |
+|  /var/log/auth.log | 登录、sudo、认证安全日志 | 文本 |  cat/less/tail |
+| /var/log/wtmp | 成功登录历史 | 二进制 | last |
+| /var/log/btmp | 登录失败记录 | 二进制 | sudo lastb |
+| /var/log/lastlog | 各用户最后登录信息 | 二进制 | lastlog |
 
 **先读取文本日志**
 
