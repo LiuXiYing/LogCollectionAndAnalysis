@@ -164,7 +164,7 @@ sudo test -f /var/log/syslog && echo "syslog exists"
 
 期望看到 `syslog exists`。`test -f` 判断路径是否为普通文件；`&&` 表示判断成功后才执行右边的 `echo`。
 
-> 记录：`/var/log/syslog` 是否存在？______；实际输出：______。
+> 记录：`/var/log/syslog` 是否存在？___是___；实际输出：___syslog exists___。
 
 **检查认证日志文件**
 
@@ -174,7 +174,7 @@ sudo test -f /var/log/auth.log && echo "auth.log exists"
 
 期望看到 `auth.log exists`。这里的 `sudo` 用于取得检查系统日志所需的权限。
 
-> 记录：`/var/log/auth.log` 是否存在？______；实际输出：______。
+> 记录：`/var/log/auth.log` 是否存在？__是____；实际输出：___auth.log exists___。
 
 如果服务未运行、时间错误，或文件检查没有预期输出，先按 [Lab1 操作手册](../Lab1/操作手册.md#九安装课程必需组件)修复。`syslog` 和 `auth.log` 是本实验的必需环境，检查通过后继续 3.3 节。
 
@@ -521,7 +521,7 @@ sudo journalctl -k -b -n 30 --no-pager
 
 **简答题：** 为什么不能直接用 `cat` 读取 `/var/log/wtmp` 和 `/var/log/btmp`？应分别使用什么命令？用一至三句话回答，无需额外执行登录历史工具。
 
-> 填写：
+> 填写：/var/log/wtmp和/var/log/btmp是二进制日志文件，cat 只能读取文本文件，直接查看会出现乱码。查看 wtmp 使用last命令，查看 btmp 使用lastb命令。
 
 **完成要求：** 环境与登录结果已填写；盘点表有 5 个真实路径；三类查询各有一句观察；本题已回答。完成后按第六节核对文件，单独提交 Lab2 的 PR。
 
