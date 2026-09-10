@@ -16,8 +16,8 @@
 
 教师指定版本为：
 
-```text
-VMware Workstation Pro 26H1 for Windows
+```文本
+适用于 Windows 的 VMware Workstation Pro 26H1
 第二步：填写检查结果
 项目	你的填写内容
 已安装的 VMware 完整版本号	26.0.0.25388281
