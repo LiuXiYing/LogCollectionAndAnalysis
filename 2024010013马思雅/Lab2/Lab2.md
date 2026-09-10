@@ -363,7 +363,7 @@ sudo ls -ld /var/log/journal /run/log/journal
 | :--- | :--- | :--- | :--- |
 |/var/log/syslog |系统全局日志 |文本|tail |
 |/var/log/auth.log |登录、SSH认证日志|文本 |  cat|
-|/var/log/dmesg|内核硬件日志 |文本 |dmesg / cat / dmesg|
+|/var/log/dmesg|内核硬件日志 |文本 |dmesg / dmesg|
 |/var/log/btmp |失败登录记录 |二进制 |lastb |
 |/var/log/journal/ |systemd持久化日志 |目录 |journalctl|
 
