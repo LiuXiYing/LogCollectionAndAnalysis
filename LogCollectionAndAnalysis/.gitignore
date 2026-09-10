@@ -1,0 +1,96 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux and editor temporary files
+*~
+*.swp
+*.swo
+*.tmp
+*.temp
+*.bak
+
+# Repository-local tools and assistants
+.claude/
+.codex/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# C/C++ compiler and linker output
+*.o
+*.obj
+*.lo
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.app/
+a.out
+
+# C/C++ build directories and generated files
+build/
+Build/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+Debug/
+Release/
+x64/
+x86/
+
+# Debugging and crash output
+*.dSYM/
+*.pdb
+*.ilk
+*.stackdump
+core
+core.*
+vgcore.*
+
+# IDE
+.vscode/
+.idea/
+.vs/
+*.code-workspace
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+xcuserdata/
+*.xcuserstate
+DerivedData/
+
+# Logs and local environment files
+*.log
+.env
+.env.*
+!.env.example

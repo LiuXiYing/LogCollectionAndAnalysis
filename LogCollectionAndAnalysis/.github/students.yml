@@ -1,0 +1,168 @@
+version: 1
+
+# 账号映射来自上学期 Cryptography 仓库的学生目录与 PR 作者。
+students:
+  "2023010120":
+    name: 何燃
+    github: DURANDAL019
+    active: true
+  "2024010001":
+    name: 赵宇轩
+    github: zyx-1-Orla
+    active: true
+  "2024010002":
+    name: 王诗惠
+    github: HUUUI-W
+    active: true
+  "2024010003":
+    name: 沈笑冉
+    github: sn0507love
+    active: true
+  "2024010004":
+    name: 王星彤
+    github: wang-xingtong
+    active: true
+  "2024010005":
+    name: 刘珈宁
+    github: 2024010005ljn
+    active: true
+  "2024010006":
+    name: 黄璇
+    github: xuan244
+    active: true
+  "2024010007":
+    name: 邱龙菲
+    github: 2024010007qlf
+    active: true
+  "2024010008":
+    name: 何成龙
+    github: hecheng-long
+    active: true
+  "2024010009":
+    name: 张怡雯
+    github: zyw-work
+    active: true
+  "2024010010":
+    name: 秦晓烽
+    github: StellarMelody
+    active: true
+  "2024010011":
+    name: 张宁佳
+    github: ShuBnana
+    active: true
+  "2024010012":
+    name: 马雨敏
+    github: 2024010012mym
+    active: true
+  "2024010013":
+    name: 马思雅
+    github: ma-siya
+    active: true
+  "2024010014":
+    name: 李冰冰
+    github: LBB-ING
+    active: true
+  "2024010015":
+    name: 胡再冉
+    github: hzr777
+    active: true
+  "2024010016":
+    name: 李响
+    github: lx-hib
+    active: true
+  "2024010017":
+    name: 陶正洪
+    github: TZH-lab
+    active: true
+  "2024010018":
+    name: 田振伟
+    github: jiutiangshuang
+    active: true
+  "2024010019":
+    name: 李欣彤
+    github: lxt2024010019
+    active: true
+  "2024010020":
+    name: 朱勇章
+    github: QS666NB
+    active: true
+  "2024010021":
+    name: 李珊娜
+    github: lllllshanna
+    active: true
+  "2024010022":
+    name: 杨云富
+    github: yyf-11111
+    active: true
+  "2024010023":
+    name: 刘薇
+    github: wei-wei-link
+    active: true
+  "2024010024":
+    name: 邹大斌
+    github: s2-ops
+    active: true
+  "2024010025":
+    name: 樊子逸
+    github: hakiii123
+    active: true
+  "2024010026":
+    name: 陆永林
+    github: luyonglin
+    active: true
+  "2024010027":
+    name: 李彤
+    github: L2006105
+    active: true
+  "2024010028":
+    name: 李顺航
+    github: li5303
+    active: true
+  "2024010029":
+    name: 李欧
+    github: Aurora-57
+    active: true
+  "2024010030":
+    name: 杨丽
+    github: YangLi-0612
+    active: true
+  "2024010031":
+    name: 周璇
+    github: zx469
+    active: true
+  "2024010032":
+    name: 侯娜
+    github: "2024010032"
+    active: true
+  "2024010033":
+    name: 杨连盛
+    github: yanglian64
+    active: true
+  "2024010034":
+    name: 王凤娥
+    github: wfe2024010034
+    active: true
+  "2024010036":
+    name: 雷清程
+    github: leimu-6
+    active: true
+  "2024010037":
+    name: 何正多
+    github: "15924731868"
+    active: true
+  "2024010038":
+    name: 许定佳
+    github: azsx63
+    active: true
+  "2024010039":
+    name: 邹艳梅
+    github: zou-yanmei
+    active: true
+  "2024010040":
+    name: 张哲
+    github: 123zhangzhe
+    active: true
+  "2024141036":
+    name: 杜佳玉
+    github: yyyfischer
+    active: true

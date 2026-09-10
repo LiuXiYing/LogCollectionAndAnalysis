@@ -1,0 +1,51 @@
+name: PR 自动审核
+
+on:
+  workflow_run:
+    workflows: ["PR 信息收集"]
+    types: [completed]
+
+permissions: {}
+
+concurrency:
+  group: pr-review-${{ github.event.workflow_run.head_repository.id }}-${{ github.event.workflow_run.head_branch }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      pull-requests: write
+      contents: write
+      actions: read
+    if: >-
+      ${{
+        github.event.workflow_run.conclusion == 'success' &&
+        github.event.workflow_run.event == 'pull_request' &&
+        github.event.workflow_run.head_repository.full_name != null
+      }}
+    steps:
+      - name: 检出受信任的默认分支代码
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: 下载可信 PR 元数据
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: pr-info
+          path: pr-info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: 使用共享审核器审核并处理 PR
+        uses: LiuXiYing/course-pr-reviewer@1ac2a54292c83cd11a03d74aa8d2388c3b2bbfcc
+        with:
+          config-path: .github/course-review.yml
+          students-path: .github/students.yml
+          metadata-dir: pr-info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          glm-api-key: ${{ secrets.GLM_API_KEY }}
