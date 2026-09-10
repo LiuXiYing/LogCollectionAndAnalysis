@@ -8,8 +8,11 @@ on:
 permissions: {}
 
 concurrency:
-  group: pr-review-${{ github.event.workflow_run.head_repository.id }}-${{ github.event.workflow_run.head_branch }}
-  cancel-in-progress: true
+  # 同一课程的 PR 串行调用共享 AI 密钥，避免触发账号级并发限制。
+  group: course-pr-review
+  cancel-in-progress: false
+  # 最多保留 100 个等待任务，避免新提交取消已有的待审核任务。
+  queue: max
 
 jobs:
   review:
@@ -22,7 +25,7 @@ jobs:
     if: >-
       ${{
         github.event.workflow_run.conclusion == 'success' &&
-        github.event.workflow_run.event == 'pull_request' &&
+        github.event.workflow_run.event == 'pull_request_target' &&
         github.event.workflow_run.head_repository.full_name != null
       }}
     steps:
@@ -42,10 +45,15 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
 
       - name: 使用共享审核器审核并处理 PR
-        uses: LiuXiYing/course-pr-reviewer@1ac2a54292c83cd11a03d74aa8d2388c3b2bbfcc
+        uses: LiuXiYing/course-pr-reviewer@165943bc67a9394779fee7b337517bbffa661f59
         with:
           config-path: .github/course-review.yml
           students-path: .github/students.yml
           metadata-dir: pr-info
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-token: ${{ secrets.PAT_TOKEN }}
           glm-api-key: ${{ secrets.GLM_API_KEY }}
+          gemini-api-key: ${{ secrets.GEMINI_API_KEY }}
+          teacher-email: xiyingliunx@gmail.com
+          smtp-username: xiyingliunx@gmail.com
+          smtp-password: ${{ secrets.GMAIL_APP_PASSWORD }}

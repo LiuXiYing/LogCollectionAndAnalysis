@@ -12,7 +12,8 @@ features:
   comment_review: true
   close_late_pr: true
   ai_review: true
-  ocr_review: true
+  ai_feedback: true
+  ocr_review: false
   vision_review: true
   metrics: true
 
@@ -22,12 +23,22 @@ defaults:
   late_close_after_days: 7
 
 ai:
-  model: glm-4.7-flash
+  providers:
+    - provider: glm
+      model: glm-4.7-flash
+    - provider: gemini
+      model: gemini-3.5-flash-lite
+  consensus_rounds: 3
   min_confidence: 0.8
   timeout_seconds: 60
-  max_attempts: 3
+  max_attempts: 5
   max_file_bytes: 200000
   max_total_bytes: 500000
+  max_output_tokens: 2048
+
+feedback:
+  timeout_seconds: 20
+  max_input_bytes: 100000
   max_output_tokens: 2048
 
 ocr:
@@ -37,23 +48,28 @@ ocr:
   max_text_chars: 20000
 
 vision:
-  model: glm-4.6v-flash
+  providers:
+    - provider: glm
+      model: glm-4.1v-thinking-flash
+    - provider: gemini
+      model: gemini-3.5-flash-lite
+  consensus_rounds: 3
   min_confidence: 0.85
   fail_confidence: 0.9
   timeout_seconds: 90
-  max_attempts: 3
+  max_attempts: 5
   max_images: 6
   max_image_bytes: 5000000
   max_total_bytes: 12000000
   max_pixels: 25000000
   max_side: 4096
-  max_output_tokens: 2048
+  max_output_tokens: 4096
 
 # 发布作业时在这里追加 Lab1、Lab2 等配置。
 # required_files 为精确文件名，不支持通配符；vision_files 支持 fnmatch 通配符。
 assignments:
   Lab1:
-    deadline: "2026-09-03T23:59:59+08:00"
+    deadline: "2026-09-10T23:59:59+08:00"
     required_files:
       - Lab1.md
       - imgs/lab1-vmware-version.png
@@ -68,11 +84,34 @@ assignments:
       - imgs/lab1-resources.png
       - imgs/lab1-services.png
     review_points:
-      - 作业信息表格中的学号、姓名、班级和完成日期必须填写完整，不能留空或保留模板占位符。
       - 任务一：VMware 版本应为 VMware Workstation Pro 26H1 for Windows。
       - 任务二：Ubuntu 应为 24.04 LTS Desktop，处理器架构为 x86_64，安装介质版本为 Ubuntu 24.04.4 LTS。当前小版本高于 24.04.4 属于正常的系统更新结果，不算错误。
       - 任务三：虚拟机应有以 192.168、172 或 10 开头的私有 IP 和包含 default via 的默认路由；ping IP 和 ping 域名均成功；sudo apt update 使用国内镜像源（如 mirrors.tuna.tsinghua.edu.cn、mirrors.aliyun.com、mirrors.ustc.edu.cn）且没有 Err 或 Failed。若网络禁止 ping 但 apt update 成功，并在表格中说明情况，可判为合格。
       - 任务四：虚拟 CPU 至少 2 核、内存至少 4GB、虚磁盘至少 40GB，且与所选配置档位一致。内存和根分区显示值略小于设置值属于正常现象，不算错误。
       - 任务五：open-vm-tools 为 active；ssh 和 rsyslog 均为 enabled 且 active；系统正在监听 TCP 22 端口；/var/log/syslog 中存在带本人学号姓名的 lab1-check 测试日志。
-      - 环境验收总结表的每一行都要给出结论，并简要说明遇到的问题和解决方法。
+      - 环境验收总结表的每一行只需给出明确结论；遇到的问题、解决方法及能否继续实验，应在表格后的说明段统一填写，不要求在每一行重复。只要前文任务表已填写且与总结一致，不得因总结表未重复 IP 地址、镜像站域名或配置档位而判为不合格。
+    vision_review_points:
       - 截图必须是学生本人环境的电脑截图，终端截图需同时显示命令和输出，文字清晰可读。出现手机拍摄屏幕的反光、摩尔纹或明显倾斜时判为不合格。
+  Lab2:
+    deadline: "2026-09-17T23:59:59+08:00"
+    required_files:
+      - Lab2.md
+      - imgs/lab2_ssh_login.png
+      - imgs/lab2_log_inventory.png
+      - imgs/lab2_journal_queries.png
+    vision_files:
+      - imgs/lab2_ssh_login.png
+      - imgs/lab2_log_inventory.png
+      - imgs/lab2_journal_queries.png
+    review_points:
+      - 环境检查：journald、rsyslog 均为 active；系统日期时间正确，时区为 Asia/Shanghai，并记录时间同步状态；/var/log/syslog 和 /var/log/auth.log 均存在。报告应填写实际检查结果。
+      - SSH 登录：记录 Ubuntu 用户名、虚拟机私有 IPv4 地址、SSH 服务 active、TCP 22 端口监听结果；通过 Windows Git Bash 成功登录 Ubuntu，并填写登录后的 whoami、hostname、pwd 结果，与截图中的用户、主机和路径一致。
+      - 日志盘点：表格应登记 5 个真实存在的日志文件或目录，填写各自用途、文本或二进制或目录类型及正确读取命令。不存在的路径不计入 5 项，命令名不能当作文件路径；可选其他真实日志，不要求所有示例路径都存在。二进制 journal 应用 journalctl 读取，不能直接 cat。
+      - 三类查询：完成 journalctl -n 30 的最近记录查询、用 --since 和 --until 指定实验当天真实时间范围的查询，以及 journalctl -p warning -b 的本次启动严重程度查询。每类应填写一句实际观察；最近记录需说明一条日志的程序或服务及事件，时间范围需记录实际起止时间，严重程度需说明一条记录或无记录提示。时间范围和严重程度查询无匹配记录属于正常情况，如实保留提示并说明即可，不要求制造报错，也不要求沿用模板中的示例日期。
+      - 实验小结：用一至三句话说明 /var/log/wtmp 和 /var/log/btmp 是二进制登录数据库，不能直接用 cat 正确解码，应分别使用 last 和 lastb（读取 btmp 通常需要 sudo）。本题只要求回答，不要求额外执行这些工具。
+      - 仅审核 3.2 至 3.6 节的必做填写及 3 张截图，不要求 4W1R 分析表。启动周期、内核查询、登录历史试读等选读内容可以保留或删除，无需执行、填写或额外截图；选读工具缺失、数据库不存在或没有记录不影响合格判定。
+    vision_review_points:
+      - 截图必须来自学生本人环境，使用电脑截图，文字清晰可读，同时显示命令与对应输出，并能辨认本人用户名、主机名或 IP；不得使用手机拍摄屏幕，截图中不得出现密码、私钥或访问令牌。同一任务允许合理拼图或裁剪无关区域，但不能裁掉命令、时间或关键结果。
+      - lab2_ssh_login.png 应显示 Git Bash 中的 SSH 连接命令，以及成功登录 Ubuntu 后 whoami、hostname、pwd 三条验证命令及其输出。
+      - lab2_log_inventory.png 应显示 /var/log 目录盘点和 file 类型检查的关键输出；个别示例路径不存在可以接受，只要报告盘点表选择了 5 个真实存在的日志文件或目录。
+      - lab2_journal_queries.png 应覆盖最近记录、指定时间范围、按严重程度筛选这 3 类必做查询的命令与关键输出。允许拼图和只保留长输出中的代表性记录；无匹配记录时保留真实提示即可，不要求启动周期或内核查询截图。
