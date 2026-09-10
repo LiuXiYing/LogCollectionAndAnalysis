@@ -1,81 +1,326 @@
-# Lab1 实验报告
-## 实验名称：Ubuntu基础环境与服务安装验证
-### 一、实验目的
-1. 掌握Ubuntu系统软件包安装、查询命令
-2. 学会查看系统服务状态、开机自启配置
-3. 验证Open-VM-Tools、OpenSSH、rsyslog服务功能
-4. 验证系统日志记录功能
+# Lab1：日志实验环境验收
 
-### 二、实验环境
-操作系统：Ubuntu 24.04（Live环境）
-虚拟化平台：VMware Workstation
+> **作业目标**：用命令输出和截图证明 VMware、Ubuntu、网络、虚拟硬件以及课程必需组件已正确安装。
+>
+> **前置条件**：已按 [`操作手册.md`](操作手册.md) 完成虚拟机安装、国内软件源配置和基础组件配置。
+>
+> **命令执行方式**：下面所有命令请**一条一条执行**，每执行一条就先看清它的输出再执行下一条。不要把一节里的命令一次性全部粘贴进终端，否则输出会混在一起，看不出是哪条命令出了问题。
 
-### 三、实验步骤与命令
-#### 1. 更新软件源（可选）
+---
+
+## 任务一：检查 VMware 版本
+
+### 第一步：查看版本
+
+在 Windows 中打开 VMware Workstation Pro，在菜单中选择 **Help → About VMware Workstation**，查看版本信息。
+
+教师指定版本为：
+
+```text
+VMware Workstation Pro 26H1 for Windows
+```
+
+### 第二步：填写检查结果
+
+| 项目 | 你的填写内容 |
+| :--- | :--- |
+| 已安装的 VMware 完整版本号 |VMware Workstation Pro 26H1 for Windows|
+| 是否为教师指定版本 |是|
+
+![VMware 版本](imgs/lab1-vmware-version.png)
+
+---
+
+## 任务二：检查 Ubuntu 版本
+
+### 第一步：查看当前系统版本
+
+```bash
+cat /etc/os-release
+```
+
+验收标准：`PRETTY_NAME` 中同时包含 `Ubuntu 24.04` 和 `LTS`。安装后执行过系统更新时，小版本可能高于 `24.04.4`，这属于正常现象。
+
+### 第二步：查看处理器架构
+
+```bash
+uname -m
+```
+
+验收标准：输出为 `x86_64`，对应 amd64 安装镜像。
+
+### 第三步：查看安装介质版本
+
+```bash
+sudo cat /var/log/installer/media-info
+```
+
+验收标准：输出中包含 `Ubuntu 24.04.4 LTS`，说明安装时使用的是教师提供的 24.04.4 镜像。
+
+### 第四步：填写检查结果
+
+| 项目 | 你的填写内容 |
+| :--- | :--- |
+| Ubuntu 当前完整版本 |Ubuntu 24.04.4 LTS|
+| 安装介质的版本 |Ubuntu 24.04.4 LTS Desktop amd64|
+| 处理器架构 |x86_64|
+| 是否为教师提供的 Ubuntu 24.04.4 LTS Desktop amd64 |是|
+
+![Ubuntu 版本](imgs/lab1-ubuntu-version.png)
+
+---
+
+## 任务三：检查虚拟机联网
+
+### 第一步：查看 IP 地址
+
+```bash
+hostname -I
+```
+
+期望输出一个私有 IP 地址，通常以 `192.168`、`172` 或 `10` 开头。
+
+### 第二步：查看默认路由
+
+```bash
+ip route
+```
+
+期望能看到一行包含 `default via` 的默认路由，说明虚拟机知道该把外网流量发给哪个网关。
+
+### 第三步：测试 IP 联通性
+
+```bash
+ping -c 4 223.5.5.5
+```
+
+成功说明虚拟机可以通过 NAT 访问外部网络。
+
+### 第四步：测试 DNS 解析
+
+```bash
+ping -c 4 mirrors.tuna.tsinghua.edu.cn
+```
+
+成功说明 DNS 解析和域名网络访问正常。
+
+### 第五步：确认软件源可用
+
 ```bash
 sudo apt update
- 
- 
-2. 安装所需软件包
- 
-sudo apt install open-vm-tools open-vm-tools-desktop openssh-server rsyslog
- 
- 
-3. 查询软件包版本，验证安装
- 
+```
+
+期望 `Get:` 行都来自你配置的国内镜像站（例如 `mirrors.tuna.tsinghua.edu.cn`），并且没有 `Err:` 或 `Failed` 提示。
+
+> 如果所在网络禁止 ping，但 `sudo apt update` 能正常下载软件索引，可将 `sudo apt update` 的成功输出作为联网证据，并在表格中说明情况。
+
+### 第六步：填写检查结果
+
+| 项目 | 你的填写内容 |
+| :--- | :--- |
+| 虚拟机 IP 地址 |192.168.137.105|
+| 网络模式 | NAT / 其他： |
+| ping `223.5.5.5` 是否成功 |成功，数据包正常收到，无丢包|
+| ping `mirrors.tuna.tsinghua.edu.cn` 是否成功 |成功，域名解析正常，网络连通|
+| 使用的软件源镜像站 |清华大学TUNA镜像源|
+| `sudo apt update` 是否成功 |成功，无报错，软件包索引更新完成|
+| 联网是否合格 |合格|
+
+![虚拟机联网](imgs/lab1-network.png)
+
+---
+
+## 任务四：检查 CPU、内存和存储分配
+
+### 第一步：查看 CPU 核心数
+
+```bash
+nproc
+```
+
+输出应与安装手册第三节选定的配置档位一致，即 `2` 或 `4`。虚拟机至少应有 2 核。
+
+### 第二步：查看内存
+
+```bash
+free -h
+```
+
+看 `Mem` 行的 `total` 列。显示的总内存通常会略小于 VMware 中设置的数值，因为一部分内存被固件和内核占用。虚拟机至少应有 4GB 内存。
+
+### 第三步：查看磁盘设备
+
+```bash
+lsblk
+```
+
+看虚拟磁盘（通常是 `sda` 或 `nvme0n1`）的 `SIZE` 列，应与创建虚拟机时设置的虚磁盘上限一致，即 40GB、60GB 或 80GB。虚拟机至少应有 40GB 虚磁盘。
+
+### 第四步：查看根分区容量
+
+```bash
+df -h /
+```
+
+看 `Size` 和 `Avail` 列。根文件系统容量可能略小于虚磁盘上限，属于正常现象。
+
+### 第五步：填写检查结果
+
+| 项目 | 你的填写内容 |
+| :--- | :--- |
+| 宿主机内存 / CPU 核心 / 存放盘剩余空间 | |
+| 选择的配置档位 | 最低可用档 / 课程推荐档 / 宽裕档 |
+| 虚拟 CPU 核心数 | |
+| 虚拟内存 | |
+| 虚磁盘容量 | |
+| 根分区可用空间 | |
+| 资源分配是否符合对应档位 | |
+
+![虚机资源](imgs/lab1-resources.png)
+
+---
+
+## 任务五：检查 VMware Tools、SSH 和 rsyslog
+
+### 第一步：确认四个软件包已安装
+
+```bash
 dpkg-query -W -f='${Package}\t${Version}\n' open-vm-tools open-vm-tools-desktop openssh-server rsyslog
- 
- 
-预期输出：四个包均输出版本号，代表安装成功
- 
-4. 查看open-vm-tools版本与运行状态
- 
+```
+
+期望四个软件包都输出各自的已安装版本号。某一行没有版本号或提示未安装，说明该软件包缺失。
+
+### 第二步：查看 VMware Tools 版本
+
+```bash
 vmware-toolbox-cmd -v
+```
+
+期望输出一个版本号，例如 `12.x.x.xxxxx (build-xxxxxxx)`。
+
+### 第三步：确认 `open-vm-tools` 服务在运行
+
+```bash
 systemctl is-active open-vm-tools
- 
- 
-5. 查看ssh、rsyslog开机自启状态
- 
+```
+
+期望输出 `active`。
+
+### 第四步：确认 SSH 和 rsyslog 已设为开机自启
+
+```bash
 systemctl is-enabled ssh rsyslog
- 
- 
-6. 查看ssh.socket、rsyslog当前运行状态
- 
-systemctl is-active ssh.socket
-systemctl is-active rsyslog
- 
- 
-7. 查看SSH 22端口监听
- 
-ss -lnt | grep ':22'
- 
- 
-8. rsyslog日志测试
- 
+```
+
+期望输出两行 `enabled`，说明重启虚拟机后这两个服务会自动启动。
+
+### 第五步：确认 SSH 和 rsyslog 正在运行
+
+```bash
+systemctl is-active ssh rsyslog
+```
+
+期望输出两行 `active`。
+
+### 第六步：确认系统在监听 22 端口
+
+```bash
+ss -lnt | grep ':22 '
+```
+
+期望看到一行包含 `LISTEN` 和 `:22` 的输出。没有任何输出说明 SSH 没有正常监听。
+
+### 第七步：验证 rsyslog 能够写入日志
+
+```bash
 logger -t lab1-check "Lab1 rsyslog test 学号姓名"
+```
+
+```bash
 sudo tail -n 10 /var/log/syslog
- 
- 
-四、实验结果
- 
-软件包查询结果
- 
-open-vm-tools	        2:13.0.10-0ubuntu0.24.04.1
-open-vm-tools-desktop	2:13.0.10-0ubuntu0.24.04.1
-openssh-server	        1:9.6p1-3ubuntu13.19
-rsyslog	                8.2312.0-3ubuntu9.1
- 
- 
-vmware-toolbox版本： 13.0.10 (build-25056151) 
-open-vm-tools状态： active ，服务正常运行
-开机自启：ssh、rsyslog默认 disabled （开机不自动启动）
-SSH端口：22端口处于LISTEN监听状态，可以接收ssh连接
-rsyslog：logger命令成功写入自定义测试日志，可在 /var/log/syslog 查看
- 
-五、实验总结
- 
-使用 apt install 可以在Ubuntu安装软件包，包名中间短横线不能替换成空格。
- dpkg-query 用于查询已安装deb软件包的版本信息。
- systemctl is-active 查看服务当前是否运行； systemctl is-enabled 查看是否开机自启。
-Ubuntu 24.04的ssh采用ssh.socket套接字激活机制，直接查询ssh.service会显示not-found，应查看ssh.socket。
- ss 命令用于查看端口监听状态， logger 命令向系统日志写入消息，rsyslog负责管理系统日志。
+```
+
+将命令中的“学号姓名”替换为自己的真实信息。如果最后几行中出现对应测试文本，说明 rsyslog 的基本写入链路正常。如果暂时没看到，稍等一秒再执行一次 `tail`。
+
+### 第八步：验证 VMware Tools 桌面功能
+
+用鼠标拖动 VMware 虚拟机窗口的边缘改变窗口大小，观察 Ubuntu 桌面分辨率是否自动调整。
+
+### 第九步：填写检查结果
+
+| 项目 | 你的填写内容 |
+| :--- | :--- |
+| VMware Tools 版本 |open-vm-tools （Ubuntu自带开源版本）|
+| `open-vm-tools` 是否 active |active（正在运行）|
+| 桌面分辨率是否能自动调整 |是，可跟随VMware窗口自动适配分辨率|
+| SSH 是否 enabled / active |enabled / active|
+| 22 端口是否监听 |是，TCP 22端口正常监听|
+| rsyslog 是否 enabled / active |enabled / active|
+| `/var/log/syslog` 是否出现带学号姓名的测试日志 |是，日志包含 2024010036 雷清程|
+| 三项组件是否全部验收合格 |是，全部合格|
+
+![基础组件状态](imgs/lab1-services.png)
+
+---
+
+## 环境验收总结
+
+| 验收项目 | 合格标准 | 你的结论 |
+| :--- | :--- | :--- |
+| VMware 版本 | VMware Workstation Pro 26H1 for Windows |合格，版本匹配教师指定版本|
+| Linux 版本 | Ubuntu 24.04 LTS Desktop amd64，安装介质为教师提供的 24.04.4 |合格，系统版本、架构与介质匹配|
+| 虚拟机联网 | 具有 IP 和默认路由，IP 联通与 DNS 解析正常 |合格，IP、网关配置正常，内外网连通，DNS解析正常|
+| 国内软件源 | 已换成国内镜像站，`sudo apt update` 成功 |合格，已切换清华TUNA源，apt update执行成功无报错|
+| CPU、内存、存储 | 至少 2 核、4GB、40GB，且与宿主机档位匹配 |合格，2核CPU，4GB内存，40GB磁盘，满足最低实验配置|
+| VMware Tools、SSH、rsyslog | 软件包已安装，服务和功能检查通过 |合格，三项组件全部安装，服务状态正常，日志测试成功|
+
+简要说明你遇到的问题、解决方法，以及当前环境是否可以继续完成后续实验：
+
+> 填写：
+
+---
+
+## 截图要求
+
+- 截图须清晰，菜单和终端文字可读。
+- 终端截图应同时显示完整命令和其输出。
+- 一张截图可以包含同一任务下的多条命令及其输出，但每条命令和它的输出必须能对应上。
+- 截图中应能看到学生自己的虚拟机或学号姓名日志，不得直接使用他人截图。
+- 必须使用电脑自带的截图功能，严禁使用手机拍摄屏幕。
+- 所有截图放在 `imgs/` 目录中，文件名与下表一致。
+
+| 截图内容 | 文件名 |
+| :--- | :--- |
+| VMware Workstation About 页面，能看到完整版本 | `lab1-vmware-version.png` |
+| Ubuntu 当前版本、安装介质版本和 `x86_64` 架构 | `lab1-ubuntu-version.png` |
+| IP、默认路由、IP ping、域名 ping 和 `apt update` 成功 | `lab1-network.png` |
+| `nproc`、`free -h`、`lsblk`、`df -h /` 输出 | `lab1-resources.png` |
+| 三项组件版本/状态、22 端口和 rsyslog 测试日志 | `lab1-services.png` |
+
+---
+
+## 提交要求
+
+在自己的“学号姓名”文件夹下新建 `Lab1/`，提交填写完整的 `Lab1.md` 和全部截图：
+
+```text
+学号姓名/
+└── Lab1/
+    ├── Lab1.md
+    └── imgs/
+        ├── lab1-vmware-version.png
+        ├── lab1-ubuntu-version.png
+        ├── lab1-network.png
+        ├── lab1-resources.png
+        └── lab1-services.png
+```
+
+> **注意**：`imgs` 全部小写。文件夹名和截图文件名区分大小写，必须与上面完全一致，否则图片引用会失效。
+
+---
+
+## 截止时间
+
+**2026 年 9 月 10 日 23:59:59**
+
+按仓库 `README.md` 第 4 节的规则：不晚于 9 月 10 日 23:59:59 创建 PR 并完成最后一次推送不算超时，9 月 11 日 00:00 起新建 PR 或向已有 PR 推送任何修改均算作超时。时间按北京时间计算，并以 GitHub 记录的最后一次推送时间为准。审核未通过的同学请务必在截止前完成修改。
