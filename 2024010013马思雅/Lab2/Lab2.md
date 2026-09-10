@@ -134,7 +134,7 @@ systemctl is-active systemd-journald
 
 `systemctl` 用于管理 systemd 服务，`is-active` 查询运行状态。期望输出 `active`，表示 journald 正在运行。
 
-> 记录：journald 的实际运行状态为 _active_____。
+> 记录：journald 的实际运行状态为 active。
 
 **检查 rsyslog 服务**
 
@@ -144,7 +144,7 @@ systemctl is-active rsyslog
 
 期望输出 `active`。SSH 服务和端口会在 3.3 节检查。
 
-> 记录：rsyslog 的实际运行状态为 _active_____。
+> 记录：rsyslog 的实际运行状态为 active。
 
 **检查系统时间**
 
@@ -154,7 +154,7 @@ timedatectl
 
 查看本地时间、时区和时间同步状态。日期与时间应正确，时区应为 `Asia/Shanghai`；时间错误会影响后面的日志筛选。
 
-> 记录：Ubuntu 的日期和时间为 __2026-09-10 13:11:50____；时区为 _Asia/Shanghai_____；时间同步状态为 __yes____。
+> 记录：Ubuntu 的日期和时间为 2026-09-10 13:11:50；时区为 Asia/Shanghai；时间同步状态为 yes。
 
 **检查 syslog 文件**
 
@@ -164,7 +164,7 @@ sudo test -f /var/log/syslog && echo "syslog exists"
 
 期望看到 `syslog exists`。`test -f` 判断路径是否为普通文件；`&&` 表示判断成功后才执行右边的 `echo`。
 
-> 记录：`/var/log/syslog` 是否存在？___是___；实际输出：___syslog exists___。
+> 记录：`/var/log/syslog` 是否存在？是；实际输出：syslog exists。
 
 **检查认证日志文件**
 
@@ -174,7 +174,7 @@ sudo test -f /var/log/auth.log && echo "auth.log exists"
 
 期望看到 `auth.log exists`。这里的 `sudo` 用于取得检查系统日志所需的权限。
 
-> 记录：`/var/log/auth.log` 是否存在？__是____；实际输出：___auth.log exists___。
+> 记录：`/var/log/auth.log` 是否存在？是；实际输出：auth.log exists。
 
 如果服务未运行、时间错误，或文件检查没有预期输出，先按 [Lab1 操作手册](../Lab1/操作手册.md#九安装课程必需组件)修复。`syslog` 和 `auth.log` 是本实验的必需环境，检查通过后继续 3.3 节。
 
@@ -217,7 +217,7 @@ whoami
 ```
 
 `whoami` 显示当前登录用户名。例如输出 `student`，后面 SSH 命令中 `@` 左边就填写 `student`。
-> 记录：Ubuntu 用户名为 msy______。
+> 记录：Ubuntu 用户名为 msy。
 
 **第 2 条：查看 Ubuntu 虚拟机 IP**
 
@@ -227,7 +227,7 @@ hostname -I
 
 这里的 `-I` 是大写字母 `I`，不是小写 `i`，也不是数字 `1`。输出可能包含多个地址，应选择与 VMware NAT 网段对应的私有 IPv4 地址，例如 `192.168.80.128`，不要填写 `127.0.0.1`。把这个地址记下来，后面填写在 SSH 命令的 `@` 右边。
 
-> 记录：本次 SSH 连接使用的 Ubuntu 虚拟机 IP 为 __192.168.136.128____。
+> 记录：本次 SSH 连接使用的 Ubuntu 虚拟机 IP 为 192.168.136.128。
 
 **第 3 条：确认 SSH 服务正在运行**
 
@@ -237,7 +237,7 @@ systemctl is-active ssh
 
 期望输出 `active`，表示 SSH 服务当前正在运行。若输出其他状态，先按 Lab1 操作手册修复 SSH 服务。
 
-> 记录：SSH 服务的实际运行状态为 __active____。
+> 记录：SSH 服务的实际运行状态为 active。
 
 **第 4 条：确认 22 端口正在监听**
 
@@ -249,7 +249,7 @@ ss -lnt | grep ':22 '
 
 期望看到包含 `LISTEN` 和 `:22` 的记录，例如本地地址为 `0.0.0.0:22` 或 `[::]:22`。如果没有输出，说明这条查询没有找到 22 端口监听记录，应先排查 SSH 服务再连接。
 
-> 记录：22 端口是否正在监听？___是___；输出中的本地地址和端口为 __0.0.0.0:22,[::]:22__。
+> 记录：22 端口是否正在监听？是；输出中的本地地址和端口为 0.0.0.0:22,[::]:22。
 
 #### 在 Windows 中连接并确认登录成功
 
@@ -293,7 +293,7 @@ whoami
 
 输出应是 Ubuntu 用户名。
 
-> 记录：SSH 登录后的用户名为 __msy____。
+> 记录：SSH 登录后的用户名为 msy。
 
 再查看主机名：
 
@@ -303,7 +303,7 @@ hostname
 
 输出应是 Ubuntu 主机名。
 
-> 记录：SSH 登录后的主机名为 __msy-VMware-Virtual-Platform____。
+> 记录：SSH 登录后的主机名为 msy-VMware-Virtual-Platform。
 
 最后查看当前目录：
 
@@ -313,7 +313,7 @@ pwd
 
 输出通常是该用户在 Ubuntu 中的主目录，例如 `/home/student`。
 
-> 记录：当前目录为 __/home/msy____；是否确认已通过 Git Bash 登录 Ubuntu？__是____。
+> 记录：当前目录为 /home/msy；是否确认已通过 Git Bash 登录 Ubuntu？是。
 
 **退出前保存 `imgs/lab2_ssh_login.png`**，保留 SSH 连接命令及这三条验证命令的输出，图片在下方显示。保存后可以继续使用这个 SSH 会话完成 3.4、3.5 节。
 
@@ -355,17 +355,17 @@ sudo ls -ld /var/log/journal /run/log/journal
 
 `ls -d` 列出目录本身。保留实际存在的路径；某个路径提示 `No such file or directory` 时，表示该目录不存在。目录中是否有可读 journal 记录，会在 3.5 节继续确认。
 
-> 记录：`/var/log/journal/` 的检查结果为 _drwxr-sr-x 2 root systemd-journal_____；`/run/log/journal/` 的检查结果为 _drwxr-xr-x 2 root systemd-journal_____。
+> 记录：`/var/log/journal/` 的检查结果为 drwxr-sr-x 2 root systemd-journal；`/run/log/journal/` 的检查结果为 drwxr-xr-x 2 root systemd-journal。
 
 **在此填写日志盘点表**：根据刚才的目录和类型检查，登记 **5 个真实存在的日志文件或目录** 即可。不存在的路径不计入这 5 项；命令名也不能当作文件路径。可从 3.1 节查阅用途和读取工具，也可选用其他真实日志。
 
 | 实际路径 | 主要用途 | 文本、二进制还是目录 | 使用什么命令读取 |
 | :--- | :--- | :--- | :--- |
 |/var/log/syslog |系统全局日志 |文本|cat / tail / less |
-|/var/log/auth.log |登录、SSH认证日志|文本 |cat / tail / less |
-|/var/log/dmesg|内核硬件日志 |文本 |dmesg |
+|/var/log/auth.log |登录、SSH认证日志|文本 |  cat / tail / less|
+|/var/log/dmesg|内核硬件日志 |文本 |dmesg / cat / tail|
 |/var/log/btmp |失败登录记录 |二进制 |lastb |
-|/var/log/journal/ |systemd持久化日志 |目录 |journalct |
+|/var/log/journal/ |systemd持久化日志 |目录 |journalctl|
 
 **先读取文本日志**
 
@@ -412,7 +412,7 @@ sudo journalctl -n 30 --no-pager
 
 `-n 30` 只显示最新的 30 条记录。默认按时间从旧到新排列，可以看到不同程序或服务的消息；这里只需任选一条阅读，不用逐条分析。
 
-> 记录：选取的一条日志来自哪个程序或服务？______；记录了什么事件？______。
+> 记录：选取的一条日志来自哪个程序或服务？sudo；记录了什么事件？用户msy使用sudo打开root会话。
 
 **查询二：指定时间范围**
 
@@ -430,7 +430,7 @@ sudo journalctl --since "2026-09-09 08:00:00" --until "2026-09-09 12:00:00" --no
 
 `--since` 指定起点，`--until` 指定终点，日期时间中的空格要保留在引号内。例如本次操作发生在 09:20，可以查询当天 09:00 至 09:30。若无结果，先核对时间范围和时区。
 
-> 记录：实际查询起点为  2026-09-09 08:00:00______；终点为 2026-09-09 12:00:00______；观察到的事件或无记录情况为 __No entries____。
+> 记录：实际查询起点为  2026-09-09 08:00:00；终点为 2026-09-09 12:00:00；观察到的事件或无记录情况为 No entries。
 
 **查询三：按严重程度筛选**
 
@@ -442,7 +442,7 @@ sudo journalctl -p warning -b --no-pager
 
 日志级别从严重到轻微依次为 `emerg`、`alert`、`crit`、`err`、`warning`、`notice`、`info`、`debug`。
 
-> 记录：是否查到匹配日志？_是_____；其中一条的内容或无记录提示为 kernel: [Firmware Bug]: TSC doesn't count with PO frequency!______。
+> 记录：是否查到匹配日志？是；其中一条的内容或无记录提示为 kernel: [Firmware Bug]: TSC doesn't count with PO frequency!。
 
 保存 `imgs/lab2_journal_queries.png`，只需覆盖以上 **3 类查询**的命令和关键输出。可合理拼图，长输出保留代表性记录，无匹配记录时保留真实提示。
 
