@@ -11,6 +11,8 @@ concurrency:
   # 同一课程的 PR 串行调用共享 AI 密钥，避免触发账号级并发限制。
   group: course-pr-review
   cancel-in-progress: false
+  # 最多保留 100 个等待任务，避免新提交取消已有的待审核任务。
+  queue: max
 
 jobs:
   review:
@@ -43,7 +45,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
 
       - name: 使用共享审核器审核并处理 PR
-        uses: LiuXiYing/course-pr-reviewer@851a6edc137d036a5ceb4736938773dd8726d048
+        uses: LiuXiYing/course-pr-reviewer@4c2ab6213d6b596c4ffd2a912cb30a2579d031ef # v0.10.6
         with:
           config-path: .github/course-review.yml
           students-path: .github/students.yml
