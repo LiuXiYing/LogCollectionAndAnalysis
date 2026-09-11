@@ -316,7 +316,7 @@ pwd
 
 输出通常是该用户在 Ubuntu 中的主目录，例如 `/home/student`。
 
-> 记录：当前目录为 ___/home/yangli/桌面___；是否确认已通过 Git Bash 登录 Ubuntu？___是___。
+> 记录：当前目录为 ___/home/yangli___；是否确认已通过 Git Bash 登录 Ubuntu？___是___。
 
 **退出前保存 `imgs/lab2_ssh_login.png`**，保留 SSH 连接命令及这三条验证命令的输出，图片在下方显示。保存后可以继续使用这个 SSH 会话完成 3.4、3.5 节。
 
@@ -524,7 +524,7 @@ sudo journalctl -k -b -n 30 --no-pager
 
 **简答题：** 为什么不能直接用 `cat` 读取 `/var/log/wtmp` 和 `/var/log/btmp`？应分别使用什么命令？用一至三句话回答，无需额外执行登录历史工具。
 
-> 填写：
+> 填写：/var/log/wtmp 和 /var/log/btmp 属于二进制日志文件，cat 只能读取文本，直接查看会显示乱码。读取/var/log/wtmp使用last命令，读取/var/log/btmp使用sudo lastb命令。
 
 **完成要求：** 环境与登录结果已填写；盘点表有 5 个真实路径；三类查询各有一句观察；本题已回答。完成后按第六节核对文件，单独提交 Lab2 的 PR。
 
