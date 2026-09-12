@@ -94,6 +94,7 @@ assignments:
       - 截图必须是学生本人环境的电脑截图，终端截图需同时显示命令和输出，文字清晰可读。出现手机拍摄屏幕的反光、摩尔纹或明显倾斜时判为不合格。
   Lab2:
     deadline: "2026-09-17T23:59:59+08:00"
+    report_template: homework/Lab2/Lab2.md
     required_files:
       - Lab2.md
       - imgs/lab2_ssh_login.png
@@ -105,7 +106,7 @@ assignments:
       - imgs/lab2_journal_queries.png
     review_points:
       - 环境检查：journald、rsyslog 均为 active；系统日期时间正确，时区为 Asia/Shanghai，并记录时间同步状态；/var/log/syslog 和 /var/log/auth.log 均存在。报告应填写实际检查结果。
-      - SSH 登录：记录 Ubuntu 用户名、虚拟机私有 IPv4 地址、SSH 服务 active、TCP 22 端口监听结果；通过 Windows Git Bash 成功登录 Ubuntu，并填写登录后的 whoami、hostname、pwd 结果，与截图中的用户、主机和路径一致。
+      - SSH 登录：记录 Ubuntu 用户名、虚拟机私有 IPv4 地址、SSH 服务 active、TCP 22 端口监听结果；通过 Windows Git Bash 成功登录 Ubuntu，并填写登录后的 whoami、hostname、pwd 结果。用户名、主机名、IP 和目录应按学生实际环境填写，不要求等于模板中的示例值；截图中的连接与验证结果由图片阶段审核。
       - 日志盘点：表格应登记 5 个真实存在的日志文件或目录，填写各自用途、文本或二进制或目录类型及正确读取命令。不存在的路径不计入 5 项，命令名不能当作文件路径；可选其他真实日志，不要求所有示例路径都存在。二进制 journal 应用 journalctl 读取，不能直接 cat。
       - 三类查询：完成 journalctl -n 30 的最近记录查询、用 --since 和 --until 指定实验当天真实时间范围的查询，以及 journalctl -p warning -b 的本次启动严重程度查询。每类应填写一句实际观察；最近记录需说明一条日志的程序或服务及事件，时间范围需记录实际起止时间，严重程度需说明一条记录或无记录提示。时间范围和严重程度查询无匹配记录属于正常情况，如实保留提示并说明即可，不要求制造报错，也不要求沿用模板中的示例日期。
       - 实验小结：用一至三句话说明 /var/log/wtmp 和 /var/log/btmp 是二进制登录数据库，不能直接用 cat 正确解码，应分别使用 last 和 lastb（读取 btmp 通常需要 sudo）。本题只要求回答，不要求额外执行这些工具。
