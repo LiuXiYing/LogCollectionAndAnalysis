@@ -365,7 +365,7 @@ sudo ls -ld /var/log/journal /run/log/journal
 | /var/log/auth.log| 认证、登录、权限相关事件，SSH 登录、sudo 操作等审计记录| 文本|tail/ less / grep|
 | /var/log/wtmp| 记录所有用户登录、登出历史记录| 二进制| last|
 | /var/log/btmp| 记录登录失败的尝试记录| 二进制|sudo lastb|
-| /var/log/journal| systemd-journald 二进制日志存储目录，存放 journal 日志| 目录| lastlog|
+| /var/log/journal| systemd-journald 二进制日志存储目录，存放 journal 日志| 目录| journalctl|
 
 **先读取文本日志**
 
