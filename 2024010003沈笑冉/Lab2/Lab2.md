@@ -154,7 +154,7 @@ timedatectl
 
 查看本地时间、时区和时间同步状态。日期与时间应正确，时区应为 `Asia/Shanghai`；时间错误会影响后面的日志筛选。
 
-> 记录：Ubuntu 的日期和时间为 ______；时区为 ______；时间同步状态为 ______。
+> 记录：Ubuntu 的日期和时间为 __2026-09-11 15:55:40 CST____；时区为 __Asia/Shanghai____；时间同步状态为 __yes____。
 
 **检查 syslog 文件**
 
@@ -164,7 +164,7 @@ sudo test -f /var/log/syslog && echo "syslog exists"
 
 期望看到 `syslog exists`。`test -f` 判断路径是否为普通文件；`&&` 表示判断成功后才执行右边的 `echo`。
 
-> 记录：`/var/log/syslog` 是否存在？______；实际输出：______。
+> 记录：`/var/log/syslog` 是否存在？__是____；实际输出：__syslog exists____。
 
 **检查认证日志文件**
 
@@ -174,7 +174,7 @@ sudo test -f /var/log/auth.log && echo "auth.log exists"
 
 期望看到 `auth.log exists`。这里的 `sudo` 用于取得检查系统日志所需的权限。
 
-> 记录：`/var/log/auth.log` 是否存在？______；实际输出：______。
+> 记录：`/var/log/auth.log` 是否存在？__是____；实际输出：__auth.log exists____。
 
 如果服务未运行、时间错误，或文件检查没有预期输出，先按 [Lab1 操作手册](../Lab1/操作手册.md#九安装课程必需组件)修复。`syslog` 和 `auth.log` 是本实验的必需环境，检查通过后继续 3.3 节。
 
@@ -228,7 +228,7 @@ hostname -I
 
 这里的 `-I` 是大写字母 `I`，不是小写 `i`，也不是数字 `1`。输出可能包含多个地址，应选择与 VMware NAT 网段对应的私有 IPv4 地址，例如 `192.168.80.128`，不要填写 `127.0.0.1`。把这个地址记下来，后面填写在 SSH 命令的 `@` 右边。
 
-> 记录：本次 SSH 连接使用的 Ubuntu 虚拟机 IP 为 _192.168.44.1_____。
+> 记录：本次 SSH 连接使用的 Ubuntu 虚拟机 IP 为 _192.168.80.128_____。
 
 **第 3 条：确认 SSH 服务正在运行**
 
@@ -361,11 +361,11 @@ sudo ls -ld /var/log/journal /run/log/journal
 
 | 实际路径 | 主要用途 | 文本、二进制还是目录 | 使用什么命令读取 |
 | :--- | :--- | :--- | :--- |
-| | | | |
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| /var/log/syslog| 系统全局综合日志，记录大部分系统服务与普通系统事件| 文本| tail/ less / cat|
+| /var/log/auth.log| 认证、登录、权限相关事件，SSH 登录、sudo 操作等审计记录| 文本|tail/ less / grep|
+| /var/log/wtmp| 记录所有用户登录、登出历史记录| 二进制| last|
+| /var/log/btmp| 记录登录失败的尝试记录| 二进制|sudo lastb|
+| /var/log/journal| systemd-journald 二进制日志存储目录，存放 journal 日志| 目录| lastlog|
 
 **先读取文本日志**
 
@@ -430,7 +430,7 @@ sudo journalctl --since "2026-09-09 08:00:00" --until "2026-09-09 12:00:00" --no
 
 `--since` 指定起点，`--until` 指定终点，日期时间中的空格要保留在引号内。例如本次操作发生在 09:20，可以查询当天 09:00 至 09:30。若无结果，先核对时间范围和时区。
 
-> 记录：实际查询起点为 __2026-09-16 15:27:30____；终点为 __2026-09-16 19:00:00____；观察到的事件或无记录情况为 __内核 perf 性能采样事件；用户 kui 通过 sudo 打开 root 会话，执行 journalctl 时间范围查询日志命令____。
+> 记录：实际查询起点为 __2026-09-09 08:00:00____；终点为 __2026-09-09 12:00:00____；观察到的事件或无记录情况为 __内核 perf 性能采样事件；用户 kui 通过 sudo 打开 root 会话，执行 journalctl 时间范围查询日志命令____。
 
 **查询三：按严重程度筛选**
 
@@ -442,7 +442,7 @@ sudo journalctl -p warning -b --no-pager
 
 日志级别从严重到轻微依次为 `emerg`、`alert`、`crit`、`err`、`warning`、`notice`、`info`、`debug`。
 
-> 记录：是否查到匹配日志？__是____；其中一条的内容或无记录提示为 __ernel: [Firmware Bug]: TSC doesn't count with P0 frequency!____。
+> 记录：是否查到匹配日志？__是____；其中一条的内容或无记录提示为 __硬件 / 图形界面相关警告信息____。
 
 保存 `imgs/lab2_journal_queries.png`，只需覆盖以上 **3 类查询**的命令和关键输出。可合理拼图，长输出保留代表性记录，无匹配记录时保留真实提示。
 
