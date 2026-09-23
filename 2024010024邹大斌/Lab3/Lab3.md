@@ -84,7 +84,7 @@ Sep  8 10:11:04 ubuntu sshd[1204]: Failed password for student from 192.168.80.1
 whoami
 ```
 
-> 记录：本次使用的 Ubuntu 用户名为 __hu__。
+> 记录：本次使用的 Ubuntu 用户名为 __hu____。
 
 再查看当前 IP：
 
@@ -274,8 +274,8 @@ Sep  8 10:15:32 ubuntu lab3_read[2310]: student_id=20260001 name=张三 action=w
 **本题填写：**
 
 ```text
-获取命令：logger -t lab3_read "write_test zoudabin 2024010024 result=success"
-日志原文：Sep 23 17:56:33 hu-VMware-Virtual-Platform lab3_read[6919]: write_test zoudabin 2024010024 result=success
+获取命令：
+日志原文：
 ```
 
 | 4W1R | 根据本人原始日志填写 |
@@ -373,9 +373,9 @@ sudo journalctl -k -b -n 30 --no-pager
 **本题填写：**
 
 ```text
-实际日志来源（使用替代来源时说明原因）：/var/log/dpkg.log
-获取命令：cat /var/log/dpkg.log | grep htop
-日志原文：2026-09-23 18:11:38 install htop:amd64 <none> 3.0.5-1
+实际日志来源（使用替代来源时说明原因）：
+获取命令：
+日志原文：
 ```
 
 | 4W1R | 根据本人原始日志填写 |
