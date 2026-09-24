@@ -260,15 +260,15 @@ sudo journalctl -k -b -n 30 --no-pager
 本题填写：
 
 实际日志来源（使用替代来源时说明原因）：
-获取命令：grep lab3_test /var/log/syslog
-日志原文：2026-09-24T08:59:03.188147+08:00 lsh-VMware-Virtual-Platform lab3_test: 李顺航 2024010028 write_test result=success
+获取命令：grep "htop" /var/log/dpkg.log
+日志原文：2026-09-24 08:50:26 status installed htop:amd64 3.3.0-4build1
 4W1R	根据本人原始日志填写
-When 什么时候	2026 年 09 月 24 日 08:59:03；日志包含年份与时区 + 08:00
-Where 在哪里	主机 lsh-VMware-Virtual-Platform，系统日志 /var/log/syslog
-Who 谁	自己指定的标签 lab3_test（logger 进程）写入；正文中标识的本人姓名为李顺航，学号 2024010028
-What 做了什么	向本机日志系统写入一条 write_test 测试消息
-Result 结果如何	正文写明 result=success，这是自己写入的测试标记，可通过 grep 查询印证
-用一两句话解释这个事件：2026 年 09 月 24 日 08:59:03，本人在 lsh-VMware-Virtual-Platform 主机上用 logger 写入一条学号为 2024010028 的测试消息，正文标记结果为 success。
+When 什么时候	2026 年 09 月 24 日 08:50:26；日志无时区信息
+Where 在哪里	主机 lsh-VMware-Virtual-Platform，日志文件 /var/log/dpkg.log
+Who 谁	dpkg 包管理工具记录，日志未记录执行操作的用户账号
+What 做了什么	记录 htop 软件包的安装状态变更
+Result 结果如何	状态为 installed，htop 软件包完成全部安装流程
+用一两句话解释这个事件：2026 年 09 月 24 日 08:50:26，dpkg 工具记录 htop 软件包安装完成，状态标记为 installed。
 
 填写：
 
