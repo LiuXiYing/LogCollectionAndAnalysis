@@ -282,7 +282,7 @@ Sep  8 10:15:32 ubuntu lab3_read[2310]: student_id=20260001 name=张三 action=w
 | :--- | :--- |
 | When 什么时候 |2026 年 9 月 25 日 18:03:28 |
 | Where 在哪里 |主机 `ubuntu-VMware-Virtual-Platform` |
-| Who 谁 |自己指定标签`lab3_read`写入；正文标识本人姓名 tianzhenwei，学号 2024010018 |
+| Who 谁 |自己指定标签`lab3_read`写入正文标识本人姓名 tianzhenwei，学号 2024010018 |
 | What 做了什么 |使用 logger 命令向本机日志系统写入一条`write_test`测试消息 |
 | Result 结果如何 |正文写明`result=success`，为自行写入的测试标记，journald 和 syslog 两处都可查询到该日志，验证写入成功 |
 
