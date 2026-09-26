@@ -909,23 +909,6 @@ sudo journalctl -o verbose -n 1 --no-pager
 
 ---
 
-## 十一、截图与提交
-
-本次单独提交 **1 份 Markdown 报告和 5 张截图**。图片引用已放在各操作后面，下表用于提交前核对。
-
-| 操作位置 | 截图必须体现的内容 | 文件名 |
-| :--- | :--- | :--- |
-| 3.1 节 | `/etc/rsyslog.conf` 与 `50-default.conf` 的查看命令和关键内容 | `lab4_rsyslog_conf.png` |
-| 第四节 | 四条 `logger` 命令，以及 `syslog`、`auth.log` 两个 `grep` 的查询结果 | `lab4_target_practice.png` |
-| 5.4 节 | local6.log / syslog / journalctl 三处验证 | `lab4_verify.png` |
-| 6.3 节 | 基础版 logrotate 配置内容与 `logrotate -d` 关键输出 | `lab4_logrotate_conf.png` |
-| 7.7 节 | 轮转前 `ls -li`、轮转后 `ls -li`、丢失现场（deleted fd）、修复后验证 | `lab4_rotate_evidence.png` |
-
-- 使用电脑截图功能，文字清晰可读，严禁手机拍摄屏幕。
-- 截图应同时显示命令和对应输出，并能辨认本人虚拟机的用户名或主机名。
-- 同一任务可合理拼图或裁剪无关区域，但不能裁掉命令、时间或关键结果。
-- 使用本人实验结果，截图中不得出现密码、私钥或访问令牌。
-- 图片保存在 `imgs/`，文件名、扩展名和大小写与表格一致。
 
 
 
