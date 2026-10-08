@@ -140,3 +140,75 @@ assignments:
       - lab3_ssh_auth.png 应显示 3.1 节的查询命令（journalctl -u ssh --since 的时间范围查询，以及筛选 Accepted 与 Failed password 的 auth.log 查询，允许使用第七节的备用查询）及关键输出。两处输出合起来能辨认本人一次成功认证和一次失败认证即可，不要求每一处都同时出现两条记录；优先核对输出中能否辨认本人的用户名或来源地址。
       - lab3_dual_pipeline.png 应显示 3.2 节含本人学号姓名的 logger 命令，以及 journal 与 syslog 两处查询结果，且两处结果包含本人学号姓名。缺少 logger 命令或缺少其中一处查询结果时判为不合格。
       - 截图中的登录账号、主机名、来源 IP 应与报告正文的记录一致；出现明显矛盾（报告填写的账号与截图不同、报告把虚拟机自身地址当作来源 IP 等）应指出。日志时间与报告填写的时间存在差别但内容可对应时属合理差异，不判为不合格。
+  Lab4:
+    deadline: "2026-10-08T23:59:59+08:00"
+    report_template: homework/Lab4/Lab4.md
+    required_files:
+      - Lab4.md
+      - imgs/lab4_rsyslog_conf.png
+      - imgs/lab4_target_practice.png
+      - imgs/lab4_verify.png
+      - imgs/lab4_logrotate_conf.png
+      - imgs/lab4_rotate_evidence.png
+    vision_files:
+      - imgs/lab4_rsyslog_conf.png
+      - imgs/lab4_target_practice.png
+      - imgs/lab4_verify.png
+      - imgs/lab4_logrotate_conf.png
+      - imgs/lab4_rotate_evidence.png
+    review_points:
+      - 任务 1 默认规则解读：3.1 节记录 /etc/rsyslog.d/ 下除 50-default.conf 外实际存在的 .conf 文件即可，不同镜像数量可能不同，按本人环境填写，列得不全不单独扣分。3.2 节两道自检题都应作答，只要方向正确就算完成：第 1 题指出没写 -p 走默认 user.notice、被 *.* 收进 syslog 即可，不要求同时说明 auth 规则只收 auth 与 authpriv；第 2 题指出 sshd 属 authpriv、被 *.*;auth,authpriv.none 里的 none 排除即可。答得简短、用词不精确但方向对，算完成。
+      - 任务 2 打靶观察表：第四节先猜表与观察表都建议填写。观察表落点应正确，即 case1 user.info 只进 syslog，case2 auth.info 只进 auth.log，case3 cron.info 只进 syslog，case4 local6.err 进 syslog 且此时没有专属文件。原因列用自己的话说明命中的规则即可，不要求引用规则原文；原因列留空或只写能、不能时判为不完整并在反馈中提醒。个别 case 落点写得不准确时指出即可，不据此判为不合格。学生环境若已有其他 local6 相关规则导致 case4 另有落点，如实说明后不判为不合格。
+      - 任务 3 新建 local6 通道：5.1 记录 ps -o user= -C rsyslogd 查到的运行用户即可，用其他方式确认或直接说明 rsyslogd 以 syslog 运行同样接受；若报告未提及目录需要调整属主，在反馈中提醒即可。5.2 规则文件应为 /etc/rsyslog.d/60-loglab-local6.conf，内容为 local6.* 指向 /var/log/loglab/local6.log，这两项是核心，写错或缺失才判为未完成。5.3 应执行 rsyslogd -N1 且无 error，systemctl status rsyslog 为 active。5.4 四处记录都建议填写，缺一两问时判为不完整并指出缺哪一问，不直接判为不合格；其中第 2 问说明同一条消息两处都有是因为同时命中 *.* 与新增的 local6 规则即可，答成因日志被复制一份虽不精确但落到命中多条规则即可。
+      - 任务 4 logrotate 配置与演练：6.2 配置块应包含 daily、rotate 7、missingok、notifempty、compress、create 0640 syslog adm 六项，缺其中一项时判为不完整并在反馈中指出，不直接判为不合格；但配置文件整体缺失或路径写错时判为未完成。6.3 应执行 logrotate -d；报出 parent directory has insecure permissions 后按讲义在配置块加 su syslog adm 即算处理正确。未报该提示而基础版配置中没有 su，不判为未完成。是否记录 dry-run 输出中认出 local6.log 不作强制要求。rotate 保留份数等数值按学生本人配置如实填写，不要求等于 7。
+      - 任务 5 轮转事故证据链：7.1 与 7.2 两次 ls -li 的 inode 编号都建议填写，看不出编号但明确说明轮转后 inode 变了也算通过；7.1 的先判断若只写了判断未回头对照，在反馈中提醒即可，不据此判为不合格。7.3 应说明 /proc 中 fd 仍指向旧文件且该文件已被删除，后缀是 .1 还是 .1.gz 不影响判定。7.5 记录手动发 HUP 后 test-2 出现在 local6.log 即可。7.6 提到新增 postrotate 与 endscript，或提到新增 su syslog adm、delaycompress 其中一项即可。7.7 记录 test-3 直接写入新的 local6.log。只手动发 HUP 而未把 postrotate 写进配置时，判为不完整并在反馈中说明原因（应把 postrotate 写入配置以固化闭环），不因此判整份作业不合格。
+      - 因果与结论边界：7.4 的原因说明落到进程仍持有旧 inode 的文件描述符、日志被写入已删除的文件即可，措辞不精确不扣分；把它写成 logrotate 把日志删除了、或文件权限被改导致写不进去时指出即可。不得把 deleted 现场解释成磁盘故障。仅凭一次轮转后文件为空就断定 rsyslog 服务异常或配置错误，属于超出证据的结论，应指出。报告未涉及的现象不要求补猜，写明未观察或未记录即可。
+      - 知识问答：第八节三题都应作答，每题 1 至 3 句。第 1 题说明 facility 表示日志类别、priority 表示严重程度，并指出 mail.err 匹配 err 及以上即可；只把两者写反时指出即可，答成只有 err 属不完整。第 2 题至少说出一个轮转理由即可（如单文件无限增长占用磁盘、旧日志不便归档清理、需要压缩与保留策略、便于按时间切分排查），说出两个及以上更好。第 3 题说明 -d 只演练不执行、-f 无视状态立即强制执行，并说明改完配置先 -d 是为了在不产生副作用的前提下确认配置被正确识别即可，不要求提到用 -f 试错的风险。
+      - 审核范围与合理差异：只审核第二节至第八节的必做填写与第十一节要求的 5 张截图。第十节选读内容（PRI 值、@ 与 @@ 与 stop、copytruncate、进阶阅读）不要求执行、填写或截图，报告中保留或删除都不影响合格判定，不得因缺少选读内容判为不合格；学生在必做内容之外额外做实验或分析可以接受，不因此加分。措辞不同、命令顺序调整、输出摘取方式不同都不扣分；主机名、用户名、IP、inode 编号、日志时间按学生本人环境填写，不要求与讲义示例一致。照抄讲义示例值（主机名 ubuntu、inode 262401、日期 Aug 17 等）而明显未核对本人输出时，记为未完成。
+      - 整体判定从宽：报告内容真实、核心步骤确实做过并能自证，即判为合格，不因个别记录栏留空、措辞不完整、输出夹带无关行而降级。严格判定只用于三种情况，即以示例值冒充本人结果、未新建 local6 通道、或未复现并修复轮转事故。反馈应逐条列出可改进之处，但未改进本身不构成不合格。
+    vision_review_points:
+      - 截图总要求：必须是学生本人环境的电脑截图，能看到命令和对应的输出或关键结果。允许合理拼图、裁剪无关区域、只保留长输出中的代表性记录。仅在手机拍摄屏幕，或截图中出现密码、私钥、访问令牌时判为不合格。窗口大小、终端配色、字体、中英文界面、排版不整齐、夹带少量无关输出，都不扣分，也不判为不合格；文字略有模糊但关键命令与结果仍可辨认时同样通过。
+      - lab4_rsyslog_conf.png：能看到 /etc/rsyslog.conf 或 /etc/rsyslog.d/50-default.conf 中至少一个文件的查看命令与内容即可通过；能辨认出一条分流规则（auth,authpriv.*、*.*;auth,authpriv.none、kern.* 任一）就足够。不要求两个文件都出现，也不要求出现 $IncludeConfig 或 imuxsock。用 cat、less 还是 nano 查看都不影响判定。
+      - lab4_target_practice.png：能看到至少三条 logger -p 命令，以及 syslog 或 auth.log 至少一处 grep 结果即可通过。四条命令或两处查询结果中缺一项时判为不完整并在反馈里指出缺哪一项，不直接判为不合格；允许只截取输出末尾若干行。
+      - lab4_verify.png：能看到 /var/log/loglab/local6.log 中的 msg=hello，以及 syslog 或 journalctl 中至少一处的同样结果即可通过。三处齐全更好，缺一处时判为不完整并指出缺哪一处，不直接判为不合格。未显示文件属主与权限的，在反馈中提醒即可，不据此判不合格。
+      - lab4_logrotate_conf.png：能看到 /etc/logrotate.d/loglab-local6 的配置内容即可通过；能一并给出 logrotate -d 的输出更好，但完全没有 dry-run 输出时只判为不完整并在反馈中提醒，不直接判为不合格。
+      - lab4_rotate_evidence.png：这是本实验的核心证据，应能辨认轮转前后的 inode 对比、deleted 现场、修复后 test-3 的结果。缺其中一项时判为不完整并明确指出缺哪一项。只有核心现象整体缺失（既看不出 inode 变化，也没有 deleted 现场）时才判为不合格；inode 编号是否逐个抄录不作要求。
+      - 报告与截图的一致性：不要求 inode 编号、日志时间、主机名逐字一致，方向一致即可（如报告称 inode 变了、截图中确实变了）。报告与截图出现明显矛盾（如报告称已用 postrotate 修复但截图仍停留在手动 HUP 的现场）时指出即可，不因此判不合格。拼图顺序与报告叙述顺序不同属合理差异。
+  Lab5:
+    deadline: "2026-10-15T23:59:59+08:00"
+    report_template: homework/Lab5/Lab5.md
+    required_files:
+      - Lab5.md
+      - imgs/lab5_prepare.png
+      - imgs/lab5_loki.png
+      - imgs/lab5_alloy.png
+      - imgs/lab5_datasource.png
+      - imgs/lab5_explore.png
+    # 仅对本次新作业启用；已发布的 Lab1 至 Lab4 继续原有审核规则。
+    template_metrics:
+      enabled: true
+      report_file: Lab5.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/lab5_prepare.png
+      - imgs/lab5_loki.png
+      - imgs/lab5_alloy.png
+      - imgs/lab5_datasource.png
+      - imgs/lab5_explore.png
+    review_points:
+      - 任务 1：2.3 节应记录 Grafana、Loki、Alloy 的实际安装版本并确认 nginx 已安装；2.4 节应记录 rsyslog 为 active，并在 /var/log/syslog 中找到含本人学号、姓名、action=write_test 和 result=success 的测试日志。采用 logger -p user.notice -t lab3_read，经 Ubuntu 默认规则写入即可；本次不依赖 Lab4，不要求 local6 专用文件、分流规则或轮转修复，也没有另行要求回答 ELK 选型题。版本按学生实际输出填写，不固定为讲义编写时的版本。
+      - 任务 2：3.2 节应记录 Loki 服务 active、/ready 返回 ready 和数据目录 /var/lib/loki；如遇启动错误应说明处理，未遇到可写未遇到。只看到软件安装完成或服务 active 不能代替 ready 检查；刚启动时等待后恢复 ready 属正常情况。
+      - 任务 3 配置与权限：4.1 至 4.2 节应验证 alloy 用户能读取 /var/log/syslog 和 /var/log/auth.log；能说明 __path__ 决定读取路径、endpoint 中的 url 指向 Loki 接收地址、forward_to 将读到的日志交给 loki.write.local.receiver 发送即可，不要求背诵整个配置。
+      - 任务 3 实际查询：4.3 节应重新写入本人日志，通过 Loki API 查到 job=syslog、正文含本人学号姓名、lab3_read 和 action=write_test 的记录；用正文时间与本地最新一条对应，证明是新写入的记录。应记录实际 job 列表、本人日志原文，并回答结果为空时先检查什么。只有 status=success、只有 job 列表、或只查到旧日志不足以证明实时采集成功；不要求 lab=5 或 phase=platform 标记。
+      - 任务 4：5.1 至 5.2 节应完成 Loki 数据源连接测试，记录浏览器实际地址，说明 Windows 浏览器访问虚拟机 IP，而同一虚拟机里的 Grafana 访问 Loki 可用 127.0.0.1；Explore 应查到与 API 对应的本人日志并记录 job、host、filename，其中 job=syslog、filename=/var/log/syslog，host 按本人主机填写。
+      - 任务 5：第六节应记录按 result=success 筛选的实际结果，说明 job 选择来源、文字条件筛选内容，并查询 auth 中的 sudo 活动。6.3 表格应写出三条可复制的实际 LogQL 及结果摘要，分别查询本人 write_test 日志、本人 success 测试记录、sudo 活动；本人参数应已替换，不得只贴截图。不要求将同一条消息在 loglab 与 syslog 中对照，result=success 是学生自己写入的测试文本，不是平台判断操作成功。
+      - 知识问答：第七节三题应作答。第 1 题说明本地有日志而 API 没有时检查 Alloy 读取权限及发送配置或服务日志，API 有而网页没有时检查数据源、时间范围和查询条件；第 2 题分清 rsyslog 写本地文件、Alloy 读取发送、Loki 保存查询、Grafana 展示；第 3 题说明 job 和 HTTP 状态码通常取值较少，完整 URI 可能有大量不同值，全部作为标签会产生过多日志流。允许简短且含义正确的表达。
+      - 审核范围：只要求第二至七节的必做记录和第十节列出的五张截图。题目、说明、示例、选读内容及 Markdown 排版须保留，但第九节选读不要求执行、作答或截图；不得因选读未填写而判未完成。不要求 Dashboard、nginx 访问或错误日志、额外软件部署、专门配置 logrotate。平台与配置应保留供后续实验使用。
+      - 合理差异：主机名、IP、时间、版本和日志原文以本人真实环境为准，接受含义相同的正确命令及查询写法、代表性输出、简短解释和界面版本差异。以实际写入、采集和查询成功为核心，非关键记录不完整时明确提醒，不因与模板措辞不同判错。模板中的命令示例可以原样保留，只有在答案区把占位符或示例冒充本人结果时才判未完成；数量检查通过也不能代替内容审核。
+    vision_review_points:
+      - 截图总要求：使用学生本人环境的电脑截图，命令和关键结果清晰可辨，能认出本人账号、学号或主机信息。允许合理拼图、裁剪无关区域、只显示代表性输出，以及不同界面语言和主题；不得使用手机拍屏，不得出现密码、私钥或访问令牌。截图应与报告填写的结果一致。
+      - lab5_prepare.png 应显示 syslog 的查询命令、含本人学号姓名及 action=write_test 的测试日志和 Grafana、Loki、Alloy 的版本输出；nginx 安装结果可结合报告确认。无需 local6 文件或 Lab4 的配置截图。
+      - lab5_loki.png 应显示 Loki 服务状态检查及 active 输出，以及 /ready 请求和 ready 返回结果。只有安装输出不能代替这两项检查。
+      - lab5_alloy.png 应覆盖以 alloy 身份读取 syslog 和 auth.log 的验证、job 查询，以及含本人学号姓名和 action=write_test 的 API 日志结果。允许拼图或截取 JSON 关键部分；只有 success 或来源列表不能证明日志已经采集。日志时间应可与报告中的本地新记录对应。
+      - lab5_datasource.png 应显示 Loki 数据源名称、连接地址和连接测试成功的结果。lab5_explore.png 应显示 Loki 数据源、时间范围、实际 LogQL、本人 write_test 日志，以及展开的 job、host、filename 标签；允许通过拼图补全关键信息。
