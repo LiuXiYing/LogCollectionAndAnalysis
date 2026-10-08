@@ -174,3 +174,41 @@ assignments:
       - lab4_logrotate_conf.png：能看到 /etc/logrotate.d/loglab-local6 的配置内容即可通过；能一并给出 logrotate -d 的输出更好，但完全没有 dry-run 输出时只判为不完整并在反馈中提醒，不直接判为不合格。
       - lab4_rotate_evidence.png：这是本实验的核心证据，应能辨认轮转前后的 inode 对比、deleted 现场、修复后 test-3 的结果。缺其中一项时判为不完整并明确指出缺哪一项。只有核心现象整体缺失（既看不出 inode 变化，也没有 deleted 现场）时才判为不合格；inode 编号是否逐个抄录不作要求。
       - 报告与截图的一致性：不要求 inode 编号、日志时间、主机名逐字一致，方向一致即可（如报告称 inode 变了、截图中确实变了）。报告与截图出现明显矛盾（如报告称已用 postrotate 修复但截图仍停留在手动 HUP 的现场）时指出即可，不因此判不合格。拼图顺序与报告叙述顺序不同属合理差异。
+  Lab5:
+    deadline: "2026-10-15T23:59:59+08:00"
+    report_template: homework/Lab5/Lab5.md
+    required_files:
+      - Lab5.md
+      - imgs/lab5_prepare.png
+      - imgs/lab5_loki.png
+      - imgs/lab5_alloy.png
+      - imgs/lab5_datasource.png
+      - imgs/lab5_explore.png
+    # 仅对本次新作业启用；已发布的 Lab1 至 Lab4 继续原有审核规则。
+    template_metrics:
+      enabled: true
+      report_file: Lab5.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/lab5_prepare.png
+      - imgs/lab5_loki.png
+      - imgs/lab5_alloy.png
+      - imgs/lab5_datasource.png
+      - imgs/lab5_explore.png
+    review_points:
+      - 任务 1：2.3 节应记录 Grafana、Loki、Alloy 的实际安装版本并确认 nginx 已安装；2.4 节应记录 rsyslog 为 active，并在 /var/log/syslog 中找到含本人学号、姓名、action=write_test 和 result=success 的测试日志。采用 logger -p user.notice -t lab3_read，经 Ubuntu 默认规则写入即可；本次不依赖 Lab4，不要求 local6 专用文件、分流规则或轮转修复，也没有另行要求回答 ELK 选型题。版本按学生实际输出填写，不固定为讲义编写时的版本。
+      - 任务 2：3.2 节应记录 Loki 服务 active、/ready 返回 ready 和数据目录 /var/lib/loki；如遇启动错误应说明处理，未遇到可写未遇到。只看到软件安装完成或服务 active 不能代替 ready 检查；刚启动时等待后恢复 ready 属正常情况。
+      - 任务 3 配置与权限：4.1 至 4.2 节应验证 alloy 用户能读取 /var/log/syslog 和 /var/log/auth.log；能说明 __path__ 决定读取路径、endpoint 中的 url 指向 Loki 接收地址、forward_to 将读到的日志交给 loki.write.local.receiver 发送即可，不要求背诵整个配置。
+      - 任务 3 实际查询：4.3 节应重新写入本人日志，通过 Loki API 查到 job=syslog、正文含本人学号姓名、lab3_read 和 action=write_test 的记录；用正文时间与本地最新一条对应，证明是新写入的记录。应记录实际 job 列表、本人日志原文，并回答结果为空时先检查什么。只有 status=success、只有 job 列表、或只查到旧日志不足以证明实时采集成功；不要求 lab=5 或 phase=platform 标记。
+      - 任务 4：5.1 至 5.2 节应完成 Loki 数据源连接测试，记录浏览器实际地址，说明 Windows 浏览器访问虚拟机 IP，而同一虚拟机里的 Grafana 访问 Loki 可用 127.0.0.1；Explore 应查到与 API 对应的本人日志并记录 job、host、filename，其中 job=syslog、filename=/var/log/syslog，host 按本人主机填写。
+      - 任务 5：第六节应记录按 result=success 筛选的实际结果，说明 job 选择来源、文字条件筛选内容，并查询 auth 中的 sudo 活动。6.3 表格应写出三条可复制的实际 LogQL 及结果摘要，分别查询本人 write_test 日志、本人 success 测试记录、sudo 活动；本人参数应已替换，不得只贴截图。不要求将同一条消息在 loglab 与 syslog 中对照，result=success 是学生自己写入的测试文本，不是平台判断操作成功。
+      - 知识问答：第七节三题应作答。第 1 题说明本地有日志而 API 没有时检查 Alloy 读取权限及发送配置或服务日志，API 有而网页没有时检查数据源、时间范围和查询条件；第 2 题分清 rsyslog 写本地文件、Alloy 读取发送、Loki 保存查询、Grafana 展示；第 3 题说明 job 和 HTTP 状态码通常取值较少，完整 URI 可能有大量不同值，全部作为标签会产生过多日志流。允许简短且含义正确的表达。
+      - 审核范围：只要求第二至七节的必做记录和第十节列出的五张截图。题目、说明、示例、选读内容及 Markdown 排版须保留，但第九节选读不要求执行、作答或截图；不得因选读未填写而判未完成。不要求 Dashboard、nginx 访问或错误日志、额外软件部署、专门配置 logrotate。平台与配置应保留供后续实验使用。
+      - 合理差异：主机名、IP、时间、版本和日志原文以本人真实环境为准，接受含义相同的正确命令及查询写法、代表性输出、简短解释和界面版本差异。以实际写入、采集和查询成功为核心，非关键记录不完整时明确提醒，不因与模板措辞不同判错。模板中的命令示例可以原样保留，只有在答案区把占位符或示例冒充本人结果时才判未完成；数量检查通过也不能代替内容审核。
+    vision_review_points:
+      - 截图总要求：使用学生本人环境的电脑截图，命令和关键结果清晰可辨，能认出本人账号、学号或主机信息。允许合理拼图、裁剪无关区域、只显示代表性输出，以及不同界面语言和主题；不得使用手机拍屏，不得出现密码、私钥或访问令牌。截图应与报告填写的结果一致。
+      - lab5_prepare.png 应显示 syslog 的查询命令、含本人学号姓名及 action=write_test 的测试日志和 Grafana、Loki、Alloy 的版本输出；nginx 安装结果可结合报告确认。无需 local6 文件或 Lab4 的配置截图。
+      - lab5_loki.png 应显示 Loki 服务状态检查及 active 输出，以及 /ready 请求和 ready 返回结果。只有安装输出不能代替这两项检查。
+      - lab5_alloy.png 应覆盖以 alloy 身份读取 syslog 和 auth.log 的验证、job 查询，以及含本人学号姓名和 action=write_test 的 API 日志结果。允许拼图或截取 JSON 关键部分；只有 success 或来源列表不能证明日志已经采集。日志时间应可与报告中的本地新记录对应。
+      - lab5_datasource.png 应显示 Loki 数据源名称、连接地址和连接测试成功的结果。lab5_explore.png 应显示 Loki 数据源、时间范围、实际 LogQL、本人 write_test 日志，以及展开的 job、host、filename 标签；允许通过拼图补全关键信息。
