@@ -171,7 +171,7 @@ systemctl is-active rsyslog
 logger -p user.notice -t lab3_read "student_id=你的学号 name=你的姓名 action=write_test result=success"
 ```
 
-`user.notice` 指定日志类别和级别，Ubuntu 的默认规则会把它写入 `/var/log/syslog`；`lab3_read` 是日志标记，方便找到自己的测试消息。
+`user.notice` 指定日志类别和级别，Ubuntu 的默认规则会把它写入 `/var/log/syslog`；`lab3_read` 是日志标记，方便找到自己的测试消息。这个标记名沿用了前几次实验的写法，便于与之前的记录对照。
 
 等待 1～2 秒后，查看含本人学号的最新一条记录：
 

@@ -212,3 +212,42 @@ assignments:
       - lab5_loki.png 应显示 Loki 服务状态检查及 active 输出，以及 /ready 请求和 ready 返回结果。只有安装输出不能代替这两项检查。
       - lab5_alloy.png 应覆盖以 alloy 身份读取 syslog 和 auth.log 的验证、job 查询，以及含本人学号姓名和 action=write_test 的 API 日志结果。允许拼图或截取 JSON 关键部分；只有 success 或来源列表不能证明日志已经采集。日志时间应可与报告中的本地新记录对应。
       - lab5_datasource.png 应显示 Loki 数据源名称、连接地址和连接测试成功的结果。lab5_explore.png 应显示 Loki 数据源、时间范围、实际 LogQL、本人 write_test 日志，以及展开的 job、host、filename 标签；允许通过拼图补全关键信息。
+  Lab6:
+    deadline: "2026-10-22T23:59:59+08:00"
+    report_template: homework/Lab6/Lab6.md
+    required_files:
+      - Lab6.md
+      - imgs/lab6-fields.png
+      - imgs/lab6-explore.png
+      - imgs/lab6-count.png
+      - imgs/lab6-status.png
+      - imgs/lab6-dashboard.png
+    template_metrics:
+      enabled: true
+      report_file: Lab6.md
+      characters: ['#', '-', '*', '`', '|', '>']
+      max_file_bytes: 200000
+    vision_files:
+      - imgs/lab6-fields.png
+      - imgs/lab6-explore.png
+      - imgs/lab6-count.png
+      - imgs/lab6-status.png
+      - imgs/lab6-dashboard.png
+    review_points:
+      - 任务 1：3.1 节应记录 loki、grafana-server、alloy 三个服务均为 active，且 /ready 返回 ready。3.3 节应记录四个路径的实际返回码，即 / 与 /api/ok 为 200、/api/missing 与 /admin 为 404，并确认 access.log 中出现了对应访问记录。路径 /admin 不代表站点真的存在管理后台；报告把 404 当成故障、或把 scanner 字样当成真实扫描证据时，指出结论边界即可，不据此判不合格。
+      - 任务 2：4.1 节应记录循环实际运行轮数、实际使用的带本人学号的 User-Agent（loglab-scanner-学号/1.0）以及是否出现请求失败。一轮完整循环预期约 95 条请求，但 95 不是 access.log 总行数，统计读数与之不符属正常，不据此判错。4.2 节应记录查询本人流量的实际 LogQL（形如 {job="nginx_access"} |= "loglab-scanner-学号/1.0"），以及选中请求的路径、状态码 404 和 User-Agent。
+      - 任务 3：5.2 节必须粘贴本人实际访问日志原文，九行字段表（remote_addr、固定占位符 -、remote_user、time_local、request、status、body_bytes_sent、http_referer、http_user_agent）应全部填写，值取自该行原文，含义列用自己的话即可。沿用讲义示例（学号 20250001、17/Aug/2026 的示例行）冒充本人结果时记为未完成。error.log 一问应回答：为空不能推出没有发生访问，因为 404 是配置中 return 404 的预期响应，不保证写入 error.log。
+      - 任务 4 之 6.1：应记录 [5m] 与 [1m] 两条实际查询（外层 sum 包裹），各选一个时间点记下读数，并说明读数统计的是以该点为终点往前的窗口区间；应说明读数不一定等于 95 的原因（窗口未覆盖整轮、包含脚本检查和重复运行的请求等）。把窗口计数说成 QPS、或把曲线上各点相加当总请求数时指出即可。
+      - 任务 4 之 6.3、6.4：6.3 节应记录本人日志被 pattern 提取出的 method、uri、status、ua，并与手工拆解一致。6.4 节应记录按状态码分组的完整查询（sum by (status) 包裹 count_over_time、pattern、status != ""、__error__ = ""），并在产生流量的时段观察到 200 与 404 的曲线。第二问应说明 |= " 404 " 只判断整行正文是否出现该文本，正文其他位置的 404（如响应体字节数恰为 404）也会命中；解析后的 status = "404" 针对提取出的字段判断。6.5 节筛 4xx/5xx 的日志行查询只要求在 Explore 中验证，不另交截图。
+      - 任务 5：应记录 Dashboard 实际名称（Lab6-学号）以及重新打开后面板仍在；面板配置应填写标题“最近 5 分钟请求量”、实际 LogQL sum(count_over_time({job="nginx_access"}[5m]))、Time series 与 Range，并用一句话说明它回答的问题。查询的换行和空格差异不影响判定。
+      - 知识问答：第八节三题都应作答，每题 1 至 3 句。第 1 题说明 access.log 适合回答谁在何时访问了什么、返回什么状态码，error.log 适合回答为什么连接或配置出错、哪些运行环节异常，并说明 404 是配置中的预期行为，不保证 error.log 增加记录。第 2 题说明解析成字段后可按字段精确过滤和分组统计，正文包含 404 会误伤其他字段中的同串数字；不得把查询时解析说成已经为正文建立了索引。第 3 题说明 Explore 用于临时验证查询、Dashboard 保存查询与展示方式；重新打开时 Grafana 按当前数据源和时间范围实时查询，时段不含数据或数据源不可用时面板为空属正常，所以仍需检查。只答“能”或“不能”记为不完整。
+      - 审核范围：只审核第三节至第八节的必做填写与第十一节要求的 5 张截图。第十节选读内容（$__range 状态码占比、$__auto、查询时解析与采集时处理的选型、restore.sh、进阶阅读）不要求执行、填写或截图，保留或删除都不影响判定；不得因选读未填写而判未完成。题目、说明与报告结构应保留。
+      - 合理差异：主机名、IP、时间、学号、User-Agent、日志原文和曲线读数以本人真实环境为准；截图与报告数值方向一致即可，不逐字核对。仅以讲义示例冒充本人结果、未实际产生并查到本人流量、或未完成字段拆解与状态码统计时记为未完成；个别记录栏留空或措辞不完整在反馈中提醒，不判不合格。
+    vision_review_points:
+      - 截图总要求：使用学生本人环境的电脑截图，命令和关键结果清晰可辨，能认出本人账号、学号或主机信息。允许合理拼图、裁剪无关区域、只显示代表性输出，以及不同界面语言和主题；不得使用手机拍屏，不得出现密码、私钥或访问令牌。截图应与报告填写的结果一致。
+      - lab6-fields.png 应显示 3.3 节四个路径的请求与状态码（能辨认 200 与 404 即可）、本人 access.log 原文以及逐字段标注，可用终端与报告预览拼图；截图中的原文应与报告粘贴的行对应。
+      - lab6-explore.png 应显示实际流量循环命令，以及 Explore 中 Loki 数据源、时间范围、查询本人标记的 LogQL 和带本人学号 User-Agent 的日志结果；查询、时间范围和日志三者都要能辨认。
+      - lab6-count.png 应显示请求量统计查询（sum 包裹的 count_over_time）、显示时间范围和请求量曲线；两个窗口的结果拼接更好，只给出一个窗口但报告已说明窗口含义时也可通过。
+      - lab6-status.png 应显示按状态码分组的完整查询、时间范围和 200 与 404 的图例与曲线；pattern 展开的字段对照可以拼入，不单独强制。
+      - lab6-dashboard.png 应显示 Dashboard 名称（Lab6-学号）、时间范围、面板标题“最近 5 分钟请求量”和有实际内容的曲线，用于证明看板已保存。
+      - 报告与截图的一致性：曲线读数、时间点不要求与报告逐字一致，方向一致即可；报告与截图出现明显矛盾（如报告称查到本人标记但截图中缺少查询或结果）时指出即可，不因此判不合格。
