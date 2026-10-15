@@ -504,7 +504,7 @@ systemctl list-timers logrotate.timer --no-pager
 >
 > ② 这台虚拟机下次自动轮转的时间是？
 >
-> 答：Fri 2026-09-25
+> 答：Fri 2026-09-25 00:00
 
 ### 6.1 常用指令（只列本实验会用到的）
 
@@ -643,11 +643,11 @@ ls -li /var/log/loglab/
 >
 > ① 轮转后 `local6.log` 的 inode 编号是多少？
 >
-> 答：1310759
+> 答：1315377
 >
 > ② 和轮转前相比，变化了吗？
 >
-> 答：没变
+> 答：变了
 
 ### 7.3 踩坑：再写一条日志，它去哪了？
 
@@ -806,7 +806,7 @@ ls -li /var/log/loglab/
 >
 > ② 此时 `/var/log/loglab/` 的文件清单是？
 >
-> 答：`ocal6.log`、`local6.log.1`、`local6.log.2.gz`
+> 答：`local6.log`、`local6.log.1`、`local6.log.2.gz`
 
 期望文件清单：`local6.log`（含 test-3）、`local6.log.1`（`delaycompress` 生效，暂未压缩）、`local6.log.2.gz`。
 
