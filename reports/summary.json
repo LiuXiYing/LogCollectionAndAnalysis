@@ -7,6 +7,13 @@
       "receipts": 37,
       "scored": 0
     },
+    "Lab10": {
+      "deadline": "2026-11-19T23:59:59+08:00",
+      "finalized": 4,
+      "mode": "tiered",
+      "receipts": 4,
+      "scored": 4
+    },
     "Lab2": {
       "deadline": "2026-09-17T23:59:59+08:00",
       "finalized": 37,
@@ -37,9 +44,9 @@
     },
     "Lab6": {
       "deadline": "2026-10-22T23:59:59+08:00",
-      "finalized": 37,
+      "finalized": 38,
       "mode": "legacy",
-      "receipts": 37,
+      "receipts": 38,
       "scored": 0
     },
     "Lab7": {
@@ -51,21 +58,21 @@
     },
     "Lab8": {
       "deadline": "2026-11-05T23:59:59+08:00",
-      "finalized": 35,
+      "finalized": 36,
       "mode": "legacy",
-      "receipts": 35,
+      "receipts": 36,
       "scored": 0
     },
     "Lab9": {
       "deadline": "2026-11-12T23:59:59+08:00",
-      "finalized": 19,
+      "finalized": 27,
       "mode": "legacy",
-      "receipts": 19,
+      "receipts": 27,
       "scored": 0
     }
   },
   "course_id": "log-collection-and-analysis",
   "errors": 0,
-  "generated_at": "2026-11-11T13:56:30.615860+00:00",
+  "generated_at": "2026-11-12T01:56:39.144020+00:00",
   "schema_version": 1
 }
