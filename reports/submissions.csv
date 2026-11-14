@@ -53,6 +53,7 @@ log-collection-and-analysis,2024010038,azsx63,Lab10,tiered,412,PASS,2026-11-19T2
 log-collection-and-analysis,2024010039,zou-yanmei,Lab10,tiered,428,PASS,2026-11-19T23:59:59+08:00,2026-11-12T23:30:32+08:00,0,False,100,10.00,10.00,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010001,zyx-1-Orla,Lab2,legacy,0,BACKFILL,2026-09-17T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010002,HUUUI-W,Lab2,legacy,0,BACKFILL,2026-09-17T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
+log-collection-and-analysis,2024010003,sn0507love,Lab2,legacy,431,PASS,2026-09-17T23:59:59+08:00,2026-11-13T21:00:36+08:00,4914037,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010004,wang-xingtong,Lab2,legacy,0,BACKFILL,2026-09-17T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010005,2024010005ljn,Lab2,legacy,0,BACKFILL,2026-09-17T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010007,2024010007qlf,Lab2,legacy,0,BACKFILL,2026-09-17T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
@@ -90,6 +91,7 @@ log-collection-and-analysis,2024010039,zou-yanmei,Lab2,legacy,0,BACKFILL,2026-09
 log-collection-and-analysis,2024141036,yyyfischer,Lab2,legacy,0,BACKFILL,2026-09-17T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010001,zyx-1-Orla,Lab3,legacy,0,BACKFILL,2026-09-24T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010002,HUUUI-W,Lab3,legacy,0,BACKFILL,2026-09-24T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
+log-collection-and-analysis,2024010003,sn0507love,Lab3,legacy,432,PASS,2026-09-24T23:59:59+08:00,2026-11-13T22:03:19+08:00,4313000,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010004,wang-xingtong,Lab3,legacy,0,BACKFILL,2026-09-24T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010005,2024010005ljn,Lab3,legacy,0,BACKFILL,2026-09-24T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010007,2024010007qlf,Lab3,legacy,0,BACKFILL,2026-09-24T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
@@ -313,6 +315,7 @@ log-collection-and-analysis,2024010039,zou-yanmei,Lab8,legacy,0,BACKFILL,2026-11
 log-collection-and-analysis,2024141036,yyyfischer,Lab8,legacy,0,BACKFILL,2026-11-05T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010001,zyx-1-Orla,Lab9,legacy,394,PASS,2026-11-12T23:59:59+08:00,2026-11-11T23:54:30+08:00,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010002,HUUUI-W,Lab9,legacy,392,PASS,2026-11-12T23:59:59+08:00,2026-11-11T22:39:33+08:00,0,False,,,,FINALIZED,2026-fall-v1
+log-collection-and-analysis,2024010003,sn0507love,Lab9,legacy,409,PASS,2026-11-12T23:59:59+08:00,2026-11-13T20:39:45+08:00,74386,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010004,wang-xingtong,Lab9,legacy,0,BACKFILL,2026-11-12T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010005,2024010005ljn,Lab9,legacy,0,BACKFILL,2026-11-12T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
 log-collection-and-analysis,2024010007,2024010007qlf,Lab9,legacy,0,BACKFILL,2026-11-12T23:59:59+08:00,,0,False,,,,FINALIZED,2026-fall-v1
