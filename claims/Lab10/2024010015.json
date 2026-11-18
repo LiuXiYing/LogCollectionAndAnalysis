@@ -1,0 +1,37 @@
+{
+  "assignment_id": "Lab10",
+  "course_id": "log-collection-and-analysis",
+  "created_at": "2026-11-18T10:30:22.620936+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-18T10:27:32+00:00",
+  "files": [
+    {
+      "blob_sha": "367bb481e27a5d0f25c031b4707fe8e094b31a72",
+      "path": "2024010015胡再冉/Lab10/Lab10.md"
+    },
+    {
+      "blob_sha": "52fd51bddcaa03005b3803612af9d5168aeddc3b",
+      "path": "2024010015胡再冉/Lab10/imgs/lab10-df-before.png"
+    },
+    {
+      "blob_sha": "99fba616490841a6adbacbcf7bf059c1beed42c0",
+      "path": "2024010015胡再冉/Lab10/imgs/lab10-du.png"
+    },
+    {
+      "blob_sha": "10cb7cea6f587a56b2b90f48245c8fee3dc0aabf",
+      "path": "2024010015胡再冉/Lab10/imgs/lab10-fix.png"
+    },
+    {
+      "blob_sha": "c5cae748a6e200b2fb7559e153321f529e139270",
+      "path": "2024010015胡再冉/Lab10/imgs/lab10-service-failed.png"
+    }
+  ],
+  "github_login": "hzr777",
+  "head_sha": "a3603238f1e09e4f837180766e3a2917b8fe645a",
+  "pr_number": 437,
+  "schema_version": 1,
+  "source_workflow_run_id": 44285642541,
+  "student_id": "2024010015",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
