@@ -1,0 +1,37 @@
+{
+  "assignment_id": "Lab10",
+  "course_id": "log-collection-and-analysis",
+  "created_at": "2026-11-19T11:50:06.467358+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-19T11:48:20+00:00",
+  "files": [
+    {
+      "blob_sha": "3dc05cc24e1d7c67490a88e861b8a9b7d4c197b8",
+      "path": "2024010017陶正洪/Lab10/Lab10.md"
+    },
+    {
+      "blob_sha": "4d522d1e0bfb63a5999d2a7ed9066e98bb97a9b1",
+      "path": "2024010017陶正洪/Lab10/imgs/lab10-df-before.png"
+    },
+    {
+      "blob_sha": "007c11710855d6e26d8feb3651348e6b0f056928",
+      "path": "2024010017陶正洪/Lab10/imgs/lab10-du.png"
+    },
+    {
+      "blob_sha": "1bfeba6e54b2ea1c41277fb336e90c1b1e4c411a",
+      "path": "2024010017陶正洪/Lab10/imgs/lab10-fix.png"
+    },
+    {
+      "blob_sha": "5bd73919db70afa39a6a5e132c91a7351b456b44",
+      "path": "2024010017陶正洪/Lab10/imgs/lab10-service-failed.png"
+    }
+  ],
+  "github_login": "TZH-lab",
+  "head_sha": "25b5660238642752b093321a3c3c780ccea6355a",
+  "pr_number": 468,
+  "schema_version": 1,
+  "source_workflow_run_id": 44518121946,
+  "student_id": "2024010017",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
