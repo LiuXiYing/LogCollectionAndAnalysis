@@ -1,0 +1,29 @@
+{
+  "assignment_id": "Lab11",
+  "course_id": "log-collection-and-analysis",
+  "created_at": "2026-11-19T01:03:47.715622+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-19T01:01:18+00:00",
+  "files": [
+    {
+      "blob_sha": "3d11e3be0654c11ffb5cd81276fc709bbfec8257",
+      "path": "2024010029李欧/Lab11/Lab11.md"
+    },
+    {
+      "blob_sha": "0a361b99a29be2bc3542db1bb188546c08e7a6fb",
+      "path": "2024010029李欧/Lab11/imgs/lab11-fix.png"
+    },
+    {
+      "blob_sha": "9d718f39182304847c8e55098ba056ee3056179e",
+      "path": "2024010029李欧/Lab11/imgs/lab11-oom.png"
+    }
+  ],
+  "github_login": "Aurora-57",
+  "head_sha": "40e71b0be11b590b54541f717d2a9512ad13438b",
+  "pr_number": 445,
+  "schema_version": 1,
+  "source_workflow_run_id": 44433678736,
+  "student_id": "2024010029",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
