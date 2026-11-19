@@ -1,0 +1,37 @@
+{
+  "assignment_id": "Lab10",
+  "course_id": "log-collection-and-analysis",
+  "created_at": "2026-11-19T15:09:01.944309+00:00",
+  "eligibility": "ELIGIBLE",
+  "eligibility_rule_version": "v1",
+  "event_at": "2026-11-19T15:07:13+00:00",
+  "files": [
+    {
+      "blob_sha": "09ce906fd3427ac6cbc27f55bbcd6c7ad1c3c230",
+      "path": "2024010010秦晓烽/Lab10/Lab10.md"
+    },
+    {
+      "blob_sha": "2eb85536c110b4a4e5213886bb316c56d3a2da77",
+      "path": "2024010010秦晓烽/Lab10/imgs/lab10-df-before.png"
+    },
+    {
+      "blob_sha": "c0ad48b6127c2a9d46699a403197ff5483e53bea",
+      "path": "2024010010秦晓烽/Lab10/imgs/lab10-du.png"
+    },
+    {
+      "blob_sha": "976b5ff8341e6d87c2012100a1027fdc5dfcff57",
+      "path": "2024010010秦晓烽/Lab10/imgs/lab10-fix.png"
+    },
+    {
+      "blob_sha": "abca5dba2bddc547381203fcd47354df5792ba22",
+      "path": "2024010010秦晓烽/Lab10/imgs/lab10-service-failed.png"
+    }
+  ],
+  "github_login": "StellarMelody",
+  "head_sha": "db515868d70a2039a604f62a3a15f017fee84e47",
+  "pr_number": 470,
+  "schema_version": 1,
+  "source_workflow_run_id": 44551243746,
+  "student_id": "2024010010",
+  "verified_from": "trusted_gitHub_event_and_exact_sha"
+}
