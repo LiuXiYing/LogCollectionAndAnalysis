@@ -5,7 +5,7 @@
   "backfilled": false,
   "course_id": "log-collection-and-analysis",
   "deadline": "2026-11-27T00:00:00+08:00",
-  "effective_submission_at": "2026-11-26T00:14:11+08:00",
+  "effective_submission_at": "2026-11-26T00:45:59+08:00",
   "github_login": "sn0507love",
   "grace_applied": false,
   "grading_config_sha256": "b803376532aac8e03273238a51b0ded471ba7382a2aa8886da4468f03b5fd61f",
@@ -18,10 +18,10 @@
   "pr_number": 480,
   "record_status": "PENDING_ACCEPTANCE",
   "review_decision": "PASS",
-  "reviewed_head_sha": "20eb08a6fe53fc21bb392dac203f2fab7ac4d6e9",
+  "reviewed_head_sha": "a588774fe6414b6c7910f9cb8ccd90acdeb16c31",
   "schema_version": 1,
   "score_cap_percent": 100,
-  "source_workflow_run_id": 45652268321,
+  "source_workflow_run_id": 45657512610,
   "student_id": "2024010003",
   "time_status": "ON_TIME"
 }
