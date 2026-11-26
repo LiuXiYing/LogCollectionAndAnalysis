@@ -16,10 +16,10 @@
     },
     "Lab11": {
       "deadline": "2026-11-27T00:00:00+08:00",
-      "finalized": 19,
+      "finalized": 23,
       "mode": "tiered",
-      "receipts": 19,
-      "scored": 19
+      "receipts": 23,
+      "scored": 23
     },
     "Lab2": {
       "deadline": "2026-09-17T23:59:59+08:00",
@@ -80,6 +80,6 @@
   },
   "course_id": "log-collection-and-analysis",
   "errors": 0,
-  "generated_at": "2026-11-25T03:34:21.163282+00:00",
+  "generated_at": "2026-11-26T02:52:50.567018+00:00",
   "schema_version": 1
 }
